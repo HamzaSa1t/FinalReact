@@ -376,7 +376,7 @@ function Dashboard() {
         <div>
         <div className="dashboard-container">
             <Structure />
-            <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginTop: '30px', marginBottom: '50px', marginLeft:'13px', marginRight:'13px' }}> 
+            <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginTop: '30px', marginBottom: '250px', marginLeft:'13px', marginRight:'13px' }}> 
                 <h1 className="basket-header" style={{textAlign: 'center'}}>Dashboard</h1>
                 <hr style={{ border: '1px solid #ccc', width: '100%' }} />
 

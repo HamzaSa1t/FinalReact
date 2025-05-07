@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/form.css"
 import LoadingIndicator from "./LoadingIndicator";
+import { Link } from 'react-router-dom';
+
 
 function LoginForm({ route, method }) {
     const [username, setUsername] = useState("");
@@ -37,7 +39,6 @@ function LoginForm({ route, method }) {
 
     return (
 <div>
-        <header className="header"></header>
 
         <form onSubmit={handleLogin} className="form-container">
             <h1>Login</h1>
@@ -59,6 +60,8 @@ function LoginForm({ route, method }) {
             <button className="form-button" type="submit">
                 Login
             </button>
+            <p> <Link to="/register"> Register </Link> </p>
+
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </form>
 

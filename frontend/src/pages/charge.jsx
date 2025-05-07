@@ -76,7 +76,7 @@ const [charge, setCharge] = useState("");
 
         
 
-<div  style={{ height: '100vh', backgroundColor: 'white', marginBottom: "20px"}}>
+<div  style={{ height: '100vh', backgroundColor: 'white', marginLeft: "20px", marginRight: "20px", paddingTop: '20px', paddingBottom: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '150px' }}>
 
 <div className="charge-container">
             <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Charge Page</h1>
@@ -91,6 +91,7 @@ const [charge, setCharge] = useState("");
                 marginRight: '30px',
                 color: 'white',
                 textAlign: 'right',
+                marginLeft: '35px',
             }}>your current Amount: ${charge}</h2>
         </div>
 

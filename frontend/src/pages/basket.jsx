@@ -240,18 +240,18 @@ catch (err) {
     if (err.request) {
         console.log("Request error:", err.request);
     }
-    alert("Error occurred during buying product.");
+    alert("you have no enough balance in your account.");
 }
     }
     return (
         <div style={{maeginbottom:'0px'}}>
         <div className="basket-page" style={{maeginbottom:'0px'}}>
             <Structure />
-            <h1 className="basket-header" style={{paddingLeft:'20px', paddingRight:'20px'}}>Your Basket</h1>
+            <h1 className="basket-header" style={{paddingLeft:'20px', paddingRight:'20px', marginBottom:'20px'}}>Your Basket</h1>
             {productsList.length > 0 ?  (
                 <div>
                     {productsList.map((product, index) => (
-                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft:'20px' }}>
                             <div style={{ textAlign: 'left', paddingLeft:'20px', paddingRight:'20px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <h3>{product.product_name}</h3>
@@ -314,8 +314,10 @@ catch (err) {
                                 />
                             )}
                         </div>
-                    ))}
-                    <div style={{ display: 'flex', gap: '10px', backgroundColor: 'white' }}>
+                    ))}   
+                    <div style={{ display: 'inline-block', gap: '10px', backgroundColor: 'white', padding: "10px", marginLeft: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', paddingRight: '20px', paddingLeft: '20px', borderRadius: '10px', marginTop: '20px', marginBottom: '20px', width: '485px'}}>
+                        
+                        <div style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', gap: '10px', }}>
                         <button 
                             onClick={() => clearBasket()}
                             style={{
@@ -351,9 +353,9 @@ catch (err) {
                         >
                             Buy
                         </button>
-                        <h1> Charge: {charge}</h1>
-                        <h1> Your Amount: {amount}</h1>
-
+</div>
+                        <h1 style={{padding:'4px', border: '7px solid #ddd'}}> Final Charge: {charge}</h1>
+                        <h1 style={{padding:'4px', border: '7px solid #ddd'}}> Your Amount: {amount}</h1>
                     </div>
                 </div>
                 
@@ -362,7 +364,7 @@ catch (err) {
 )}
 
         </div>
-        <div style={{marginTop:'35px'}}>
+        <div style={{marginTop:'600px'}}>
 
         <Tail/>
 

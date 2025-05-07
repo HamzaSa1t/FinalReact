@@ -145,42 +145,43 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-    @transaction.atomic # Check word doc
-    def perform_create(self, serializer):
-      try:  
-        user = serializer.save()                   
-        user_type = profile_data.get("user_type")
-        
+@transaction.atomic
+def perform_create(self, serializer):
+    user = None
+    try:
+        user = serializer.save() 
+        profile = user.profile_user  
+
+        if not profile:
+            user.delete()
+            raise ValidationError({"profile_user": "Profile creation failed"})
+
+        user_type = profile.user_type
         if not user_type:
             user.delete()
-            raise ValidationError({"user_type": "This field is required."})
-        
-        if user_type not in ["Customer", "Employee", "Manager"]:            
-            user.delete()
-            raise ValidationError({"user_type": "Invalid user type."})
+            raise ValidationError({"profile_user": {"user_type": "This field is required"}})
 
+
+        valid_types = {"Customer", "Employee", "Manager"}
+        if user_type not in valid_types:
+            user.delete()
+            raise ValidationError({"profile_user": {"user_type": "Invalid user type"}})
+ 
         if user_type == "Customer":
             Customer.objects.create(user=user)
         elif user_type == "Employee":
             Employee.objects.create(user=user)
         elif user_type == "Manager":
             Manager.objects.create(user=user)
-      
-      except ValidationError as e:
-            logger.error(f"ValidationError: {e}")
-            raise e
-      except IntegrityError as e:
+    
+    except IntegrityError as e:
+        if user:
             user.delete()
-            logger.error(f"IntegrityError: str{e}")
-            raise ValidationError({"error": "Database integrity error: " + str(e)})
-      except ValidationError as e:
-            logger.error(f"ValidationError: {e}")
-            raise e 
-      except Exception as e:
-            if user:
-                user.delete() 
-            logger.error(f"Unexpected error: {e}")            
-            raise ValidationError({"error": "An unexpected error occurredddddd " + str(e)})
+        raise ValidationError({"error": "Database error: " + str(e)})
+    except Exception as e:
+        if user:
+            user.delete()
+        raise ValidationError({"error": "An error occurred: " + str(e)})
 
 class UpdateCustomerAmountView(APIView):
 

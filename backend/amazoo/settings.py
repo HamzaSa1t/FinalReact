@@ -192,3 +192,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'amazoowebsite@gmail.com'
 EMAIL_HOST_PASSWORD = 'wrhh zbnl vqek xnqn'  
+
+print("Using database:", DATABASES['default']['ENGINE'])  # Check server logs

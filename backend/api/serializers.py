@@ -6,21 +6,27 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['user_type']
+    
+    def validate_user_type(self, value):
+        valid_types = {"Customer", "Employee", "Manager"}
+        if value not in valid_types:
+            raise serializers.ValidationError("Invalid user type")
+        return value
 
 class UserSerializer(serializers.ModelSerializer):
-    profile_user = ProfileSerializer()  # Nested 
+    profile_user = ProfileSerializer(required=True)  # ✅ Required field
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "profile_user"]  
+        fields = ["id", "username", "password", "profile_user"]
         extra_kwargs = {"password": {"write_only": True}}
-   
+
     def create(self, validated_data):
-        profile_data = validated_data.pop('profile_user', None)  
-        user = User.objects.create_user(**validated_data)  
+        profile_data = validated_data.pop('profile_user')
+        user = User.objects.create_user(**validated_data)
         
-        if profile_data:
-            Profile.objects.create(user=user, **profile_data)
+        # Create profile using the serializer
+        Profile.objects.create(user=user, **profile_data)  # ✅ Safe (already validated)
         
         return user
 

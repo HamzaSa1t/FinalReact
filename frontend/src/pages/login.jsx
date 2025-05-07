@@ -8,21 +8,15 @@ function Login() {
 return(
 <div>
 
-<div>
-      <header className="header">   
+<header className="header">
+        
         <h1>Amazoo</h1>
         <p className="tagline">We sell products you love!</p>
-    </header>  
-     </div>
+    </header>   
      
 <div className="backl"> 
 <LoginForm/>
 <br></br>
-<p>
-          <Link to="/register">
-              Register
-            </Link>
-          </p>
 </div>
 <Tail />
 </div>    
