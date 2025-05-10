@@ -178,7 +178,7 @@ CORS_ALLOWS_CREDENTIALS = True
 WE ADDED THOSE FUNCTIONS AND MADE THEM = TRUE.
 """
 CORS_ALLOWED_ORIGINS = [
-    'final-react-xi.vercel.app',
+    'https://final-react-xi.vercel.app',
    # "http://localhost:5173",
    # "http://localhost:5175"
 ]
