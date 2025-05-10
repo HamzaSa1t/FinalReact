@@ -3,7 +3,7 @@ import { ACCESS_TOKEN } from "./constants";
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

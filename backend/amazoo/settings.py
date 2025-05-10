@@ -44,11 +44,9 @@ STATIC_URL = '/static/'
 SECRET_KEY = 'django-insecure-%=3xm$lrhgufaw*e2zv6w(z2j^h1r89wg5l3jky5)h(@je1chq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-""" WE  JUST ADDDED * INSIDE THE [] TO ALLIW ALL THE HOSTS TO BE ALLOWED"""
-
+ALLOWED_HOSTS = ["final-react-xi.vercel.app", "finalreact-nhpx.onrender.com"]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -84,13 +82,13 @@ added api, rest_framework, corsheaders.
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
 """
 - we added corsheaders to middleware.
@@ -175,14 +173,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 """
 WE ADDED THOSE FUNCTIONS AND MADE THEM = TRUE.
 """
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", # or the correct port for your react app.
-    "http://localhost:5175"
+    'final-react-xi.vercel.app',
+   # "http://localhost:5173",
+   # "http://localhost:5175"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
