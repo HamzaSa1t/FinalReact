@@ -3,8 +3,8 @@ import { ACCESS_TOKEN } from "./constants";
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    withCredentials: true,
+    baseURL: "https://finalreact-nhpx.onrender.com",
+    withCredentials: true,  
     headers: {
         'Content-Type': 'application/json',
     }
