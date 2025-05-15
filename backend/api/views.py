@@ -145,43 +145,71 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-@transaction.atomic
-def perform_create(self, serializer):
-    user = None
-    try:
-        user = serializer.save() 
-        profile = user.profile_user  
+    @transaction.atomic
+    def perform_create(self, serializer):
+        user = None
+        try:
+            user = serializer.save() 
+            profile = user.profile_user  
 
-        if not profile:
-            user.delete()
-            raise ValidationError({"profile_user": "Profile creation failed"})
+            if not profile:
+                user.delete()
+                raise ValidationError({"profile_user": "Profile creation failed"})
 
-        user_type = profile.user_type
-        if not user_type:
-            user.delete()
-            raise ValidationError({"profile_user": {"user_type": "This field is required"}})
+            user_type = profile.user_type
+            if not user_type:
+                user.delete()
+                raise ValidationError({"profile_user": {"user_type": "This field is required"}})
 
 
-        valid_types = {"Customer", "Employee", "Manager"}
-        if user_type not in valid_types:
-            user.delete()
-            raise ValidationError({"profile_user": {"user_type": "Invalid user type"}})
- 
-        if user_type == "Customer":
-            Customer.objects.create(user=user)
-        elif user_type == "Employee":
-            Employee.objects.create(user=user)
-        elif user_type == "Manager":
-            Manager.objects.create(user=user)
+            valid_types = {"Customer", "Employee", "Manager"}
+            if user_type not in valid_types:
+                user.delete()
+                raise ValidationError({"profile_user": {"user_type": "Invalid user type"}})
     
-    except IntegrityError as e:
-        if user:
-            user.delete()
-        raise ValidationError({"error": "Database error: " + str(e)})
-    except Exception as e:
-        if user:
-            user.delete()
-        raise ValidationError({"error": "An error occurred: " + str(e)})
+            if user_type == "Customer":
+                Customer.objects.create(user=user)
+            elif user_type == "Employee":
+                Employee.objects.create(user=user)
+            elif user_type == "Manager":
+                Manager.objects.create(user=user)
+        
+        except IntegrityError as e:
+            if user:
+                user.delete()
+            raise ValidationError({"error": "Database error: " + str(e)})
+        except Exception as e:
+            if user:
+                user.delete()
+            raise ValidationError({"error": "An error occurred: " + str(e)})
+
+
+class ShowBalance(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is logged in
+
+    def get(self, request, *args, **kwargs):
+        user = request.user # we use it in apiviews
+
+        try:
+            customer = user.customer_username  # Access the related Customer object
+            return Response({"balance": customer.amount}, status=status.HTTP_200_OK)
+        except Customer.DoesNotExist:
+            pass  
+
+        try:
+            employee = user.employee_username  # Access the related Employee object
+            return Response({"balance": employee.amount}, status=status.HTTP_200_OK)
+        except Employee.DoesNotExist:
+            pass  
+
+        try:
+            manager = user.manager_username  # Access the related Manager object
+            return Response({"balance": manager.amount}, status=status.HTTP_200_OK)
+        except Manager.DoesNotExist:
+            pass  
+                    
+        return Response({"error": "no user found."}, status=status.HTTP_404_NOT_FOUND)
+
 
 class UpdateCustomerAmountView(APIView):
 
@@ -432,33 +460,6 @@ class AddToChart(UpdateAPIView):
             relation.save()
 
         return Response({"detail": f"Added {quantity} {product.name}(s) to your basket."}, status=status.HTTP_200_OK)
-
-class ShowBalance(APIView):
-    permission_classes = [IsAuthenticated]  # Ensure the user is logged in
-
-    def get(self, request, *args, **kwargs):
-        user = request.user # we use it in apiviews
-
-        try:
-            customer = user.customer_username  # Access the related Customer object
-            return Response({"balance": customer.amount}, status=status.HTTP_200_OK)
-        except Customer.DoesNotExist:
-            pass  
-
-        try:
-            employee = user.employee_username  # Access the related Employee object
-            return Response({"balance": employee.amount}, status=status.HTTP_200_OK)
-        except Employee.DoesNotExist:
-            pass  
-
-        try:
-            manager = user.manager_username  # Access the related Manager object
-            return Response({"balance": manager.amount}, status=status.HTTP_200_OK)
-        except Manager.DoesNotExist:
-            pass  
-                    
-        return Response({"error": "no user found."}, status=status.HTTP_404_NOT_FOUND)
-
 
 class ClearChart(generics.DestroyAPIView): # !!! الحين لما تسوي كلير للسلة انت لسا ما حذفت اوبجكتات العلاقة + السيريالايزر كلاس؟
     serializer_class = CustomerRelationToProductSerializer
