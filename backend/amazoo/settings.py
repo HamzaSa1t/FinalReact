@@ -46,7 +46,12 @@ SECRET_KEY = 'django-insecure-%=3xm$lrhgufaw*e2zv6w(z2j^h1r89wg5l3jky5)h(@je1chq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["final-react-xi.vercel.app", "finalreact-nhpx.onrender.com"]
+ALLOWED_HOSTS = [
+"final-react-xi.vercel.app",
+    "finalreact-nhpx.onrender.com",
+    "final-react-git-main-hamzas-projects-8f309efb.vercel.app",
+    "final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app"
+]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -177,9 +182,12 @@ CORS_ALLOWS_CREDENTIALS = True
 """
 WE ADDED THOSE FUNCTIONS AND MADE THEM = TRUE.
 """
-CORS_ALLOWED_ORIGINS = [
-    'https://final-react-xi.vercel.app',
-   # "http://localhost:5173",
+CORS_ALLOWED_ORIGINS = [  
+  'https://final-react-xi.vercel.app',
+  'https://finalreact-nhpx.onrender.com',
+  'https://final-react-git-main-hamzas-projects-8f309efb.vercel.app',
+  'https://final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app',
+    # "http://localhost:5173",
    # "http://localhost:5175"
 ]
 
