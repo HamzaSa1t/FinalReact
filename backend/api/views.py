@@ -84,6 +84,22 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
+
+@app.route('/refresh_token', methods=['POST'])
+def TokenRefreshSlidingView():
+    refresh_token = request.json.get('refresh_token')
+    if not refresh_token:
+        return jsonify({'message': 'Refresh token is missing!'}), 401
+    try:
+        data = jwt.decode(refresh_token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        user = User.query.filter_by(id=data['id']).first()
+        if not user:
+            return jsonify({'message': 'Invalid refresh token!'}), 401
+        access_token = jwt.encode({'id': str(user.id), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify({'access_token': access_token})
+    except:
+        return jsonify({'message': 'Invalid refresh token!'}), 401
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_email_api(request):

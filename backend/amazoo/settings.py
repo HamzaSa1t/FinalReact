@@ -187,8 +187,8 @@ CORS_ALLOWED_ORIGINS = [
   'https://finalreact-nhpx.onrender.com',
   'https://final-react-git-main-hamzas-projects-8f309efb.vercel.app',
   'https://final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app',
-    # "http://localhost:5173",
-   # "http://localhost:5175"
+ # "http://localhost:5173",
+ # "http://localhost:5175",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
