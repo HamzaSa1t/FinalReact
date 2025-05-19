@@ -85,7 +85,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
 
-@app.route('/refresh_token', methods=['POST'])
+""" @app.route('/refresh_token', methods=['POST'])
 def TokenRefreshSlidingView():
     refresh_token = request.json.get('refresh_token')
     if not refresh_token:
@@ -98,7 +98,7 @@ def TokenRefreshSlidingView():
         access_token = jwt.encode({'id': str(user.id), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
         return jsonify({'access_token': access_token})
     except:
-        return jsonify({'message': 'Invalid refresh token!'}), 401
+        return jsonify({'message': 'Invalid refresh token!'}), 401 """
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
