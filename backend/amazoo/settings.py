@@ -15,6 +15,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os 
+import dj_database_url
 """
  The Path class from the pathlib module provides an object-oriented way to work with file system paths. It makes working with paths.
  Represents a duration or difference between two dates or times. Often used in calculations for time intervals.
@@ -126,14 +127,11 @@ WSGI_APPLICATION = 'amazoo.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'), # This will now read from your .env file
+        conn_max_age=600
+    )
 }
-
-# This will ensure a separate test database is used
-DATABASES['default']['NAME'] = 'test_mydb'  # Django automatically creates a test version of your database.
 
 
 # Password validation
@@ -187,8 +185,8 @@ CORS_ALLOWED_ORIGINS = [
   'https://finalreact-nhpx.onrender.com',
   'https://final-react-git-main-hamzas-projects-8f309efb.vercel.app',
   'https://final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app',
- # "http://localhost:5173",
- # "http://localhost:5175",
+  "http://localhost:5173",
+  "http://localhost:5175",
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
