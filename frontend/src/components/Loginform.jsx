@@ -32,7 +32,7 @@ function LoginForm({ route, method }) {
             console.log("Login Error:", error); 
             if (error.response?.data) {
             const errorData = error.response.data;
-            setErrorMessage(errorData.detail || "An error occurred during login. check your username and password.");
+            setErrorMessage(errorData.error || "An error occurred: check your username and password.");
             }
        
 

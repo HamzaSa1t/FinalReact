@@ -130,9 +130,9 @@ null
                                 onClick={() => navigate(`/ViewProduct/${product.id}`)}
                                 onMouseEnter={(e) => e.currentTarget.style.cursor = 'pointer'} 
                                 onMouseLeave={(e) => e.currentTarget.style.cursor = 'default'} 
-                            >
+                            >   
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                {product.picture && <img src={product.picture} alt={product.name} className="product-image" style={{
+                                {product.picture && <img src="/5.png" alt={product.name} className="product-image" style={{
                                   maxWidth: '100%',
                                   maxHeight: '350px', 
                                   height: 'auto'
