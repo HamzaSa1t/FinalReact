@@ -30,8 +30,12 @@ function LoginForm({ route, method }) {
             navigate("/")
         } catch (error) {
             console.log("Login Error:", error); 
-            setErrorMessage("Login failed: " + (error.response?.data?.detail + " / " + error.message + "/" + errorData.error ));
-            
+            if (error.response?.data) {
+            const errorData = error.response.data;
+            setErrorMessage(errorData.detail || "An error occurred during login. check your username and password.");
+            }
+       
+
         } finally {
             setLoading(false)
         }
