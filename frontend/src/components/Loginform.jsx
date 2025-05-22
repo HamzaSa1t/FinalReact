@@ -29,7 +29,6 @@ function LoginForm({ route, method }) {
             localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
             navigate("/")
         } catch (error) {
-            alert(error)
             console.log("Login Error:", error); 
             setErrorMessage("Login failed: " + (error.response?.data?.detail || error.message));
         } finally {

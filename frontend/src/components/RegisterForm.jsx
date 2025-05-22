@@ -97,6 +97,10 @@ navigate("/login");
 
 
 } catch (error) {
+   setTimeout(() => {
+    setLoading(false);
+  }, 500);
+  
       if (error.response?.data) {
         const errorData = error.response.data;
 
