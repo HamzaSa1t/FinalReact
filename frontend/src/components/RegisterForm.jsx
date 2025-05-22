@@ -100,7 +100,7 @@ navigate("/login");
    setTimeout(() => {
     setLoading(false);
   }, 500);
-  
+
       if (error.response?.data) {
         const errorData = error.response.data;
 
@@ -115,7 +115,8 @@ navigate("/login");
         
         // 3. General error (only if no specific errors)
         if (!errorData.profile_user && errorData.error) {
-          setErrorMessage(errorData.error);
+          setErrorMessage(errorData.error);             
+
         }
       }
     }

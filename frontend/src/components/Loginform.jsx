@@ -30,7 +30,8 @@ function LoginForm({ route, method }) {
             navigate("/")
         } catch (error) {
             console.log("Login Error:", error); 
-            setErrorMessage("Login failed: " + (error.response?.data?.detail || error.message));
+            setErrorMessage("Login failed: " + (error.response?.data?.detail + " / " + error.message + "/" + errorData.error ));
+            
         } finally {
             setLoading(false)
         }
