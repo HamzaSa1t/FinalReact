@@ -55,8 +55,8 @@ api.interceptors.response.use(
         console.error("Response Interceptor - Refresh Token Error:", refreshError); // Log refresh error
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(REFRESH_TOKEN);
-        console.log("Response Interceptor - Tokens removed, redirecting to /login"); // Log token removal and redirection
-        window.location.href = '/login';
+        //console.log("Response Interceptor - Tokens removed, redirecting to /login"); // Log token removal and redirection
+        // window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }
