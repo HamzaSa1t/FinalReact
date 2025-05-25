@@ -50,7 +50,7 @@ function EditProduct() {
             formData.append("price", productData.price);
             formData.append("description", productData.description);
             formData.append("rating", productData.rating);
-            formData.append("picture", file); 
+        //    formData.append("picture", file); 
 
             const response = await api.patch(`api/products/update/${productData.id}/`, formData, {
                 headers: {
@@ -105,7 +105,7 @@ function EditProduct() {
 
     <Structure />
     
-    <div>
+    <div className="main-container">
 
     <form onSubmit={(e) => {
         e.preventDefault();
@@ -140,9 +140,8 @@ function EditProduct() {
                     placeholder="Product description"
                 />
                 {DescriptionError && <p style={{ color: "red" }}>{DescriptionError}</p>}
-
-                {picture && (
-                        <div>
+                {/* {picture && (
+                        <div style={{ backgroundColor: "grey" }}>
                             {typeof picture === 'string' ? (
                                 <a href={picture} target="_blank" rel="noopener noreferrer" style={{color: 'black'}}>
                                     View Picture
@@ -150,17 +149,93 @@ function EditProduct() {
                             ) : (
                                 <p>{picture.name}</p>
                             )}
-                            <button type="button" onClick={removePicture} style={{marginLeft:'5px'}}> X</button>
+                            <button type="button" onClick={removePicture} style={{marginLeft:'5px', backgroundColor:"grey"}}> X</button>
                         </div>
-                    )}
+                    )} */}
 
-                <input
+                {
+                 <button
+                        type="button"
+                        style={{
+                            marginTop: '10px',
+                            backgroundColor: 'grey',
+                            color: 'white',
+                            padding: '10px 20px',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = '#888';
+                            window.showFeatureUnavailableTooltip = true;
+                            const tooltip = document.createElement('div');
+                            tooltip.innerText = 'This feature is unavailable for now cause we did not pay for Amazon S3 service. An image will be created for this product by the website automatically';
+                            tooltip.style.position = 'fixed';
+                            tooltip.style.zIndex = 9999;
+                            tooltip.style.background = '#333';
+                            tooltip.style.color = '#fff';
+                            tooltip.style.padding = '10px';
+                            tooltip.style.borderRadius = '5px';
+                            tooltip.style.top = (e.clientY + 10) + 'px';
+                            tooltip.style.left = (e.clientX + 10) + 'px';
+                            tooltip.id = 'feature-unavailable-tooltip';
+                            document.body.appendChild(tooltip);
+                        }}
+                        onMouseMove={(e) => {
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) {
+                                tooltip.style.top = (e.clientY + 10) + 'px';
+                                tooltip.style.left = (e.clientX + 10) + 'px';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = 'grey';
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) tooltip.remove();
+                        }}
+                        onTouchStart={(e) => {
+                            const tooltip = document.createElement('div');
+                            tooltip.innerText = 'This feature is unavailable for now cause we did not pay for Amazon S3 service. An image will be created for this product by the website automatically';
+                            tooltip.style.position = 'fixed';
+                            tooltip.style.zIndex = 9999;
+                            tooltip.style.background = '#333';
+                            tooltip.style.color = '#fff';
+                            tooltip.style.padding = '10px';
+                            tooltip.style.borderRadius = '5px';
+                            tooltip.style.top = (e.touches[0].clientY + 10) + 'px';
+                            tooltip.style.left = (e.touches[0].clientX + 10) + 'px';
+                            tooltip.id = 'feature-unavailable-tooltip';
+                            document.body.appendChild(tooltip);
+                        }}
+                        onTouchEnd={() => {
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) tooltip.remove();
+                        }}
+                    >
+                        Edite Image
+                    </button>
+                
+                /* <input
                     className="form-input"
                     type="file"
                     accept="image/*"
                     onChange={(e) => setPicture(e.target.files[0])}
                     placeholder="Product Picture"
-                />
+                    style={{
+                            backgroundColor: 'grey',
+                            color: 'white',
+                            padding: '10px 20px',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                /> */}
                 {PictureError && <p style={{ color: "red" }}>{PictureError}</p>}
 
                 <h2>Seller: {seller}</h2>

@@ -76,10 +76,10 @@ const [charge, setCharge] = useState("");
 
         
 
-<div  style={{ height: '100vh', backgroundColor: 'white', marginLeft: "20px", marginRight: "20px", paddingTop: '20px', paddingBottom: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '150px' }}>
+<div  style={{ height: '100vh', backgroundColor: 'white', marginLeft: "20px", marginRight: "20px", paddingTop: '5px', paddingBottom: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '150px', minHeight: "100vh" }}>
 
 <div className="charge-container">
-            <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Charge Page</h1>
+            <h1 style={{textAlign: 'center', paddingTop: '20px'}}>Balance</h1>
             <hr style={{ border: '1px solid #ccc', width: '95%' }} />
             <h2 style={{
                 marginTop: '10px',
@@ -88,9 +88,9 @@ const [charge, setCharge] = useState("");
                 padding: '10px',
                 display: 'inline-block',
                 marginBottom: '10px',
-                marginRight: '30px',
+                marginRight: '35px',
                 color: 'white',
-                textAlign: 'right',
+                textAlign: 'center',
                 marginLeft: '35px',
             }}>your current Amount: ${charge}</h2>
         </div>
@@ -98,10 +98,10 @@ const [charge, setCharge] = useState("");
 <form onSubmit={handleSubmit} style={{ marginTop: '20px', backgroundColor: '#f9f9f9', padding: '20px' }}>
     <div className="form-group">
         <h2 htmlFor="amount" style={{textAlign: "center"}}>Add Amount:</h2>
-        <input placeholder="Add amount" type="number" id="amount" name="amount" required onInput={(e) => {if (e.target.value < 1) e.target.value = ""; }} style={{ backgroundColor: '#f9f9f9'}}/>
+        <input placeholder="insert in dollars $" type="number" id="amount" name="amount" required onInput={(e) => {if (e.target.value < 1) e.target.value = ""; }} style={{ backgroundColor: '#f9f9f9'}}/>
     </div>
     <div style={{ textAlign: 'center' }}>
-        <button type="submit"  style={{backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius:'5px', height:'40px', width:'90px', marginTop:'20px'}}>Submit</button>
+        <button type="submit"  style={{backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius:'5px', height:'40px', width:'90px', marginTop:'20px'}}>Add</button>
     </div>
 </form>
 

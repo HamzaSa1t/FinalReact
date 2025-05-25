@@ -1,59 +1,91 @@
+/* --- Structure.css related styles (Header, Nav Buttons) --- */
+
+/* Base header styles */
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #4CAF50; 
+  background-color: #4CAF50;
   color: rgb(255, 255, 255);
-  padding-top: 1px;
+  padding-top: 1px; /* Consider using rem for padding */
   margin-top: 0%;
-  padding-bottom: 0px; 
+  padding-bottom: 0px; /* Consider using rem for padding */
 }
 
-div {
-  margin: 0px; 
-  padding: 0;
-  border: 0;
-  box-sizing: border-box;
-}
-
-h1 {
-  font-size: 2.5rem;
+/* Header H1 (Amazoo title) */
+.header h1 {
+  font-size: 2.5rem; /* Default font size for larger screens */
   margin-top: 0.5em;
   margin-bottom: 0.2em;
 }
 
+/* Header Tagline (We sell products you love!) */
 .tagline {
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* Default font size for larger screens */
   color: #e0e0e0;
   text-align: center;
   margin-top: 0.2em;
-  margin-bottom: 1em; 
+  margin-bottom: 1em;
 }
 
+/* Button list container */
 .button-list {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center; /* Set to center for all screen sizes by default */
   padding: 0;
-  margin-top: 10px; 
+  margin-top: 10px; /* Consider using rem for margin */
+  /* --- Added for horizontal scrolling on mobile --- */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  white-space: nowrap; /* Prevents buttons from wrapping */
+  width: 100%; /* Ensure it takes full width to allow scrolling */
+  padding-bottom: 20px; /* Add some padding for scrollbar visibility */
+  scrollbar-width: thin; /* Customize scrollbar appearance */
+  scrollbar-color: #4CAF50 #e0e0e0; /* Customize scrollbar colors */
 }
 
+/* Individual header buttons */
 .header-button {
-  padding: 8px 15px;
-  margin: 5px;
+  padding: 8px 15px; /* Consider using rem for padding */
+  margin: 5px; /* Consider using rem for margin */
   border: 1.5px solid #ccc;
-  border-radius: 5px; 
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  background-color: #4CAF50; 
-  color: white; 
-  font-size: 1em;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1em; /* Default font size */
   font-family: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  flex-shrink: 0; /* Prevent buttons from shrinking below their content size */
 }
 
 .header-button:hover {
-  background-color: #ddd; 
+  background-color: #ddd;
+}
+
+/* --- Media Queries for Header Responsiveness --- */
+
+/* For screens up to 767px (typical mobile devices) */
+@media (max-width: 767px) {
+  .header h1 {
+    font-size: 1.8rem; /* Smaller font size for mobile */
+    margin-top: 0.3em;
+    margin-bottom: 0.1em;
+  }
+
+  .tagline {
+    font-size: 0.9rem; /* Smaller font size for mobile */
+    margin-bottom: 0.8em;
+  }
+
+  .header-button {
+    padding: 6px 10px; /* Smaller padding for buttons */
+    margin: 3px; /* Smaller margin between buttons */
+    font-size: 0.85em; /* Smaller font size for buttons */
+  }
+  /* Removed justify-content: flex-start; from here to keep it centered */
 }

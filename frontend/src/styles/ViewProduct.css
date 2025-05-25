@@ -27,3 +27,29 @@
 .product-details p strong {
     font-weight: bold;
 }
+
+/*  .product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.625rem; /* Added margin for spacing 
+} */
+/*
+.product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.625rem;                   
+} */      
+ 
+@media (min-width: 430px) and (max-width: 767px) {
+
+
+.product-details{
+    width: 85%;
+    align-items: center;
+      justify-content: center;
+  align-items: center;
+
+}
+}

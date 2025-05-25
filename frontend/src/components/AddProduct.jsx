@@ -51,9 +51,9 @@ const AddProduct = () => {
         formData.append('description', description);
         formData.append('created_at', createdAt);
     
-        if (picture instanceof File) {
+        /* if (picture instanceof File) {
             formData.append('picture', picture);
-        }
+        } */
     
         const token = localStorage.getItem('authToken');
     
@@ -74,7 +74,7 @@ const AddProduct = () => {
                 setProductName('');
                 setPrice('');
                 setDescription('');
-                setPicture(null); 
+               // setPicture(null);
                 setCreatedAt('');
             } else {
                 alert("Failed to make product.");
@@ -113,6 +113,7 @@ const AddProduct = () => {
                     onChange={(e) => setProductName(e.target.value)}
                     placeholder="Product name**"
                     required
+                    maxLength={15}
                 />
                 {ProductNameError && <p style={{ color: "red" }}>{ProductNameError}</p>}
 
@@ -143,39 +144,10 @@ const AddProduct = () => {
                 {DescriptionError && <p style={{ color: "red" }}>{DescriptionError}</p>}
 <br></br>
                 <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <input
-                        className="form-input"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                                const validImageTypes = ['image/jpeg', 'image/png'];
-                                if (!validImageTypes.includes(file.type)) {
-                                    setPictureError("Invalid image type. Please upload a JPEG, PNG.");
-                                    setPicture(null); 
-                                } else {
-                                    setPictureError(""); 
-                                    setPicture(file); 
-                                }
-                            } else {
-                                setPictureError("");
-                            }
-                        }}
-                        style={{
-                            opacity: 0,
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            width: '100%',
-                            height: '100%',
-                            cursor: 'pointer',
-                        }}
-                    />
                     <button
                         type="button"
                         style={{
-                            backgroundColor: '#4CAF50',
+                            backgroundColor: 'grey',
                             color: 'white',
                             padding: '10px 20px',
                             border: 'none',
@@ -185,8 +157,52 @@ const AddProduct = () => {
                             fontWeight: 'bold',
                             transition: 'background-color 0.3s ease',
                         }}
-                        onMouseEnter={(e) => (e.target.style.backgroundColor = '#45a049')}
-                        onMouseLeave={(e) => (e.target.style.backgroundColor = '#4CAF50')}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = '#888';
+                            window.showFeatureUnavailableTooltip = true;
+                            const tooltip = document.createElement('div');
+                            tooltip.innerText = 'This feature is unavailable for now cause we did not pay for Amazon S3 service. An image will be created for this product by the website automatically';
+                            tooltip.style.position = 'fixed';
+                            tooltip.style.zIndex = 9999;
+                            tooltip.style.background = '#333';
+                            tooltip.style.color = '#fff';
+                            tooltip.style.padding = '10px';
+                            tooltip.style.borderRadius = '5px';
+                            tooltip.style.top = (e.clientY + 10) + 'px';
+                            tooltip.style.left = (e.clientX + 10) + 'px';
+                            tooltip.id = 'feature-unavailable-tooltip';
+                            document.body.appendChild(tooltip);
+                        }}
+                        onMouseMove={(e) => {
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) {
+                                tooltip.style.top = (e.clientY + 10) + 'px';
+                                tooltip.style.left = (e.clientX + 10) + 'px';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = 'grey';
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) tooltip.remove();
+                        }}
+                        onTouchStart={(e) => {
+                            const tooltip = document.createElement('div');
+                            tooltip.innerText = 'This feature is unavailable for now cause we did not pay for Amazon S3 service. An image will be created for this product by the website automatically';
+                            tooltip.style.position = 'fixed';
+                            tooltip.style.zIndex = 9999;
+                            tooltip.style.background = '#333';
+                            tooltip.style.color = '#fff';
+                            tooltip.style.padding = '10px';
+                            tooltip.style.borderRadius = '5px';
+                            tooltip.style.top = (e.touches[0].clientY + 10) + 'px';
+                            tooltip.style.left = (e.touches[0].clientX + 10) + 'px';
+                            tooltip.id = 'feature-unavailable-tooltip';
+                            document.body.appendChild(tooltip);
+                        }}
+                        onTouchEnd={() => {
+                            const tooltip = document.getElementById('feature-unavailable-tooltip');
+                            if (tooltip) tooltip.remove();
+                        }}
                     >
                         Add Product Image
                     </button>

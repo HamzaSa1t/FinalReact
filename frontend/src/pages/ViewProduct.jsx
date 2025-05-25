@@ -32,6 +32,12 @@ function ViewProduct() {
         getProducts(pk);
     }, []);
 
+        const productImages = [
+        '/1.png', // Updated path
+        '/2.png',        // Updated path
+        '/3.png',      // Updated path
+    ];
+
     const getProducts = async (pk) => {
         try {
             const response = await api.get(`api/products/${pk}/`);
@@ -116,15 +122,15 @@ function ViewProduct() {
                 {(name !== "") && <div className="product-details">
                 <h1 style={{textAlign: 'center'}} >{name}</h1>
                 <hr style={{ border: '1px solid #ccc', width: '95%' }} />
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img src={picture} alt={name} style={{marginTop: '10px', alignContent:'center'}}/>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} /* className="product-image-container" */>
+                <img src={productImages[Math.floor(Math.random() * productImages.length)]} alt={name} /* className="product-image" */ style={{marginTop: '10px', alignContent:'center', height: "50vh", width: "50vh"}}/>
                 </div>                                                                                                                          
-                <p><strong>Description:</strong> {description}</p>
+                <p><strong>Description:</strong> {description ? description : "No description added by seller"}</p>
                 <p><strong>Rating:</strong> {rating} / 5 ( By {number_of_ratings} )</p>
                 <p><strong>Seller:</strong> {seller}</p>
                 <p><strong>Created At:</strong> {new Date(createdAt).toLocaleDateString()}</p>
                 <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginTop: '20px', gap: '10px' }}>
-                {(UserType === "Customer") && <div> <StarRating/><button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '3px', cursor: 'pointer', marginTop:'40px' }}>Add to Cart</button></div>}
+                {(UserType === "Customer") && <div> <StarRating/><button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '3px', cursor: 'pointer', marginTop:'40px', borderRadius:"5px" }}>Add to Cart</button></div>}
                 {(UserId === seller) && <div> <button onClick={() => ToEdit(pk)} style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Edit Product</button></div>}
                 {(UserType === "Employee" && UserId === seller) && <div> <button onClick={() => DeleteProducts(pk)} style={{ backgroundColor: '#f44336', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Delete Product</button></div>}
                 {(UserType === "Manager") && <div> <button style={{ backgroundColor: '#f44336', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Delete Product</button> </div>}

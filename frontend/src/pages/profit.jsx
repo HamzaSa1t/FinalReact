@@ -65,17 +65,19 @@ const [charge, setCharge] = useState("");
 
 <Structure/>
 
-<div style={{ backgroundColor: 'white', marginTop: '20px', marginBottom:'20px', height: '100vh', textAlign: 'center' , marginLeft:'13px', marginRight:'13px' }}>
+<div style={{ backgroundColor: 'white', marginTop: '20px', marginBottom:'100px', height: '100vh', textAlign: 'center' , marginLeft:'13px', marginRight:'13px', minHeight: '100vh' }}>
+<br></br>
 <h1> BALANCE</h1>            
 <hr style={{ border: '1px solid #ccc', width: '1005' }} />
-<h1 style={{
+<h1     className= 'charge-emp'
+style={{
      backgroundColor: '#4CAF50',
                 borderRadius: '5px',
                 padding: '10px',
                 marginRight: '30px',
                 color: 'white',
                 display: 'inline-block',
-                textAlign: 'center',}}>your current Amount: ${charge}</h1>
+                textAlign: 'center',}}>your current Amount: {charge}$</h1>
         </div>
         <Tail/>
         </div>

@@ -23,6 +23,12 @@ function Basket() {
         ShowBalance();
     }, []);
 
+    const productImages = [
+        '/1.png', // Updated path
+        '/2.png',        // Updated path
+        '/3.png',      // Updated path
+    ];
+
     const ShowBalance = async () => {
         try {
             const response = await api.get("api/balance/")
@@ -247,14 +253,14 @@ catch (err) {
         <div style={{maeginbottom:'0px'}}>
         <div className="basket-page" style={{maeginbottom:'0px'}}>
             <Structure />
-            <h1 className="basket-header" style={{paddingLeft:'20px', paddingRight:'20px', marginBottom:'20px'}}>Your Basket</h1>
+            <h1 className="basket-header" style={{paddingLeft:'20px', paddingRight:'20px', marginBottom:'20px'}}>Your Items</h1>
             {productsList.length > 0 ?  (
                 <div>
                     {productsList.map((product, index) => (
-                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft:'20px' }}>
+                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft:'20px', backgroundColor: "#fff", width: '85%', padding: '10px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
                             <div style={{ textAlign: 'left', paddingLeft:'20px', paddingRight:'20px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <h3>{product.product_name}</h3>
+                                    <h2>{product.product_name}</h2>
                                 </div>
                                 <p>
                                 <strong> Quantity: </strong>
@@ -298,11 +304,11 @@ catch (err) {
                                 </p>
 
                                 <p><strong>Price: {product.product_price}</strong></p>
-                                <button onClick={() => deleteProduct(product.id)}>delete</button>
+                                <button onClick={() => deleteProduct(product.id)}>Remove</button>
                             </div>
                             {product.picture && (
                                 <img
-                                    src={product.picture}
+    src={productImages[Math.floor(Math.random() * productImages.length)]}
                                     alt={product.product_name}
                                     style={{
                                         width: '120px',
@@ -315,9 +321,13 @@ catch (err) {
                             )}
                         </div>
                     ))}   
-                    <div style={{ display: 'inline-block', gap: '10px', backgroundColor: 'white', padding: "10px", marginLeft: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', paddingRight: '20px', paddingLeft: '20px', borderRadius: '10px', marginTop: '20px', marginBottom: '20px', width: '485px'}}>
+                    <div style={{ display: 'inline-block', gap: '10px', backgroundColor: 'white', padding: "10px", marginLeft: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', paddingRight: '20px', paddingLeft: '20px', borderRadius: '10px', marginTop: '20px', marginBottom: '20px', width: '40%'}}>
                         
-                        <div style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', gap: '10px', }}>
+
+                        <h2 style={{padding:'4px'}}> Final Charge: {charge}$</h2>
+                        <h2 style={{padding:'4px'}}> Your Amount: {amount}$</h2>
+
+                                                <div style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', gap: '10px', }}>
                         <button 
                             onClick={() => clearBasket()}
                             style={{
@@ -354,13 +364,12 @@ catch (err) {
                             Buy
                         </button>
 </div>
-                        <h1 style={{padding:'4px', border: '7px solid #ddd'}}> Final Charge: {charge}</h1>
-                        <h1 style={{padding:'4px', border: '7px solid #ddd'}}> Your Amount: {amount}</h1>
                     </div>
                 </div>
                 
             ) : (
-                        null
+                                    <h3 style={{ textAlign: 'center' }}>No products found in your history.</h3>
+
 )}
 
         </div>

@@ -17,7 +17,7 @@ import ViewProduct from "./pages/ViewProduct.jsx"
 import AddBalance from "./pages/AddBalance.jsx"
 import Basket from "./pages/basket.jsx"
 import Structure from "./components/Structure.jsx"
-import ProductDetails from "./pages/ProductDetails.jsx"
+// import ProductDetails from "./pages/ProductDetails.jsx"
 import EmployeeHistory from "./pages/EmployeeHistory.jsx"
 import Tail from "./components/Tail.jsx"
 function App() {
@@ -36,7 +36,7 @@ function App() {
       <Route path="/AddBalance"element={<ProtectedRoute><AddBalance/></ProtectedRoute>}/>
       <Route path="/Basket/:pk"element={<ProtectedRoute><Basket/></ProtectedRoute>}/>
       <Route path="/structure/:pk" element={<Structure />} />
-      <Route path="/product/:pk" element={<ProductDetails />} />
+      {/* <Route path="/product/:pk" element={<ProductDetails />} /> */}
       <Route path="/employeeHistory" element={<ProtectedRoute><EmployeeHistory/></ProtectedRoute>}/>
       <Route path="/tail" element={<Tail />} />
 

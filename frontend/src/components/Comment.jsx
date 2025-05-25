@@ -88,9 +88,7 @@ function Comment() {
         }
     };
 
-    const handleTimeChange = (time) => {
-        setCreated_at(time); 
-    };
+  
 
 return(
 
@@ -112,11 +110,13 @@ return(
         <div className="comments-container">
             {comments.map((comment, index) => (
                 <div key={index} className="comment">
-                       <p><strong></strong> {comment.written_by}</p>
-                       <p><strong></strong> {comment.created_at}</p>
-                       <hr style={{ border: '1px solid #ccc', width: '95%' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                       <h2 style={{ margin: "0px" }}>{comment.written_by}</h2>
+                       <p style={{ margin: 0 }}> {new Date(comment.created_at).toLocaleDateString()}</p>
+                    </div>
+                                           <hr style={{ border: '1px solid #ccc', width: '95%' }} />
 
-                    <h2>{comment.content}</h2>
+                    <p>{comment.content}</p>
                 </div>
             ))}
         </div>

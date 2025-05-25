@@ -1,96 +1,78 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from "../api";
 import { useParams } from 'react-router-dom';
 
 function StarRating() {
+  // State to manage the visual hover effect on stars
   const [hoverRating, setHoverRating] = useState(0);
-  const { pk } = useParams(); 
-  const [hasRendered, setHasRendered] = useState(false);
+  // Get product primary key from URL parameters
+  const { pk } = useParams();
 
-  const [Rating, setRating] = useState(0);
+  // State to store the current average rating displayed
   const [displayRating, setDisplayRating] = useState(0);
-  const [new_rating, setNew_rating] = useState(0);
+  // State to store the total number of ratings received
+  const [numberOfRatings, setNumberOfRatings] = useState(0);
 
-  const [updatedRatingsCount, setUpdatedRatingsCount] = useState(0);
-  const [number_of_ratings, setNumber_of_ratings] = useState(0);
-
+  // useEffect hook to fetch initial product data (number of ratings and current rating)
+  // Runs once on component mount
   useEffect(() => {
-    getNumber(pk);
-    getRating(pk);
-        }, []);
+    fetchProductDetails();
+  }, [pk]); // Dependency on 'pk' ensures re-fetch if product ID changes
 
-  useEffect(() => {
-    if (!hasRendered) {
-      setHasRendered(true);
-      return;
-    } 
-  }, [new_rating]);
-
-  const handleRatingClick = async (value) => {
-    setNew_rating(value);
-    const newCount = number_of_ratings + 1;
-    setNumber_of_ratings(newCount);
-    setUpdatedRatingsCount(newCount);
-    await sendRating(value, newCount); 
-    await getRating(pk); 
-  };
-
-const getNumber = async (pk) => {
+  // Function to fetch product details (rating and number_of_ratings)
+  const fetchProductDetails = async () => {
     try {
-        const response = await api.get(`api/products/${pk}/`);
-        if (response.data) {
-          setNumber_of_ratings(response.data.number_of_ratings);
-        } else {
-            console.error("Products not found or data is invalid");
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
-
-const getRating = async (pk) => {
-  try {
       const response = await api.get(`api/products/${pk}/`);
       if (response.data) {
+        console.log("Product details fetched:", response.data);
         setDisplayRating(response.data.rating);
+        setNumberOfRatings(response.data.number_of_ratings);
       } else {
-          console.error("Products not found or data is invalid");
+        console.error("Product details not found or data is invalid for PK:", pk);
       }
-  } catch (error) {
-      console.error('Error fetching data:', error);
-  }
-};
-
-const sendRating = async (new_rating, newCount) => {
-  try {
-    const response = await api.patch(`api/products/${pk}/rate/`, {'new_rating':new_rating, 'number_of_ratings':77});
-    if (response.status === 201 || response.status === 200) {
-  // console.log("Rating successful", new_rating, " | ", newCount);
-    } else {
-     //   console.log("Failed to create product", response.status);
-        alert("Failed to make product.");
+    } catch (error) {
+      console.error('Error fetching product details:', error);
     }
-} catch (err) {
-    console.log("Error during product creation:", err);
+  };
 
-    if (err.response) {
-    //    console.log("Response error data:", err.response.data);
-     //   console.log("Response status:", err.response.status);
-      //  console.log("Response headers:", err.response.headers);
+  // Handler for when a user clicks on a star to set a new rating
+  const handleRatingClick = async (value) => {
+    // Calculate the new count of ratings (increment by 1)
+    const newCount = numberOfRatings + 1;
+
+    try {
+      // Send the new rating and updated count to the backend
+      // CRITICAL FIX: Ensure 'number_of_ratings' sends 'newCount', not a hardcoded value
+      const response = await api.patch(`api/products/${pk}/rate/`, {
+        'new_rating': value,
+        'number_of_ratings': newCount // Corrected: send the calculated newCount
+      });
+
+      if (response.status === 201 || response.status === 200) {
+        console.log("Rating successful:", value, " | New count:", newCount);
+        await fetchProductDetails();
+      } else {
+        console.error("Failed to update product rating. Status:", response.status);
+        // Consider displaying a user-friendly error message on the UI
+      }
+    } catch (err) {
+      console.error("Error during rating submission:", err);
+      if (err.response) {
+        console.error("Response error data:", err.response.data);
+        console.error("Response status:", err.response.status);
+      } else if (err.request) {
+        console.error("Request error:", err.request);
+      }
+      // Consider displaying a user-friendly error message on the UI
     }
+  };
 
-    if (err.request) {
-        console.log("Request error:", err.request);
-    }
-
-    alert("Error occurred during product creation.");
-}
-}
-
+  // Handler for mouse entering a star (hover effect)
   const handleMouseEnter = (value) => {
     setHoverRating(value);
   };
 
+  // Handler for mouse leaving the stars area (reset hover effect)
   const handleMouseLeave = () => {
     setHoverRating(0);
   };
@@ -102,6 +84,9 @@ const sendRating = async (new_rating, newCount) => {
         <span
           key={value}
           style={{
+            // Apply 'gold' color if the star's value is less than or equal to
+            // the currently hovered rating OR the actual display rating.
+            // Hover takes precedence over display rating for visual feedback.
             color: value <= (hoverRating || displayRating) ? 'gold' : '#ddd',
             fontSize: '24px',
             cursor: 'pointer',
@@ -113,9 +98,9 @@ const sendRating = async (new_rating, newCount) => {
           ★
         </span>
       ))}
+      {/* Optionally display the number of ratings */}
     </div>
   );
 }
 
 export default StarRating;
-

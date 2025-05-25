@@ -10,23 +10,33 @@
     margin-bottom: 20px;
 }
 
-.product-item {
+.product-item-cart {
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
+    display: flex;
 }
 
-.product-item h3 {
-    margin: 0 0 10px 0;
+.product-item-cart .product-image-history {
+    width: 100px;
+    height: 100px;
+    margin-right: 2px;
+    border-radius: 5px;
+    margin-left: 50px;
 }
 
-.product-item p {
-    margin: 5px 0;
+.product-item-cart h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
 }
 
-.product-item button {
+.product-item-cart p {
+    margin: 3px 0;
+}
+
+.product-item-cart button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -36,7 +46,7 @@
     margin-right: 10px;
 }
 
-.product-item button:hover {
+.product-item-cart button:hover {
     background-color: #0056b3;
 }
 
@@ -77,3 +87,73 @@ body {
     padding: 0;
 }
 
+.product-item-cart{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 10px;
+      width: 1%;
+}
+
+.product-sort-select {
+  display: block; /* Ensures it takes its own line */
+  margin: 1rem auto; /* Center horizontally with vertical margin */
+  padding: 0.6rem 1rem; /* Adjusted padding for a more compact look */
+  font-size: 1rem; /* Default font size */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  max-width: 250px; /* Max width for desktop */
+  width: 70%; /* Responsive width for larger screens */
+  text-align: center; /* Center text inside select */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+@media (min-width: 430px) and (max-width: 767px) {
+  .charge-emp{
+    margin-left: 30px;
+  }
+ .product-item-cart {
+    flex-direction: row; /* Keep items in a row on very small screens */
+    justify-content: space-between; /* Space out content and image */
+    padding: 0.75rem; /* Slightly less padding */
+    width: 80%; /* Make it wider by reducing side margins/padding */
+    margin-left: 1rem; /* Add a small margin to the sides */
+    margin-right: 1rem; /* Add a small margin to the sides */
+    align-items: center; /* Center items vertically */
+ 
+  }
+
+  h3 {
+    font-size: 0.2rem; /* Smaller font size for product name */
+  }
+
+  .item p {
+    font-size: 0.9rem; /* Smaller font for price/quantity */
+  }
+
+  .item h3:last-child {
+    font-size: 1.2rem; /* Smaller font for total */
+    text-align: right; /* Align total to the right on stacked view */
+    width: 10 0%; /* Ensure total takes full width for alignment */
+  }
+
+  .product-image {
+    width: 80px; /* Slightly smaller image */
+    height: 80px; /* Slightly smaller image */
+    align-self: center; /* Center the image when stacked */
+    margin-left: 0; /* Remove specific left margin */
+    padding-left: 0;
+    margin-right: 0px; /* Add some space between image and text */
+    padding-right: 0;
+  }
+
+  .product-sort-select {
+    padding: 0.4rem 0.8rem; /* Smaller padding on mobile */
+    font-size: 0.9rem; /* Smaller font size on mobile */
+    width: 40%; /* Make it take more width on mobile, but still leave some margin */
+    margin: 0.8rem auto; /* Reduced vertical margin on mobile */
+  }
+
+}

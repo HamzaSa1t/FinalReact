@@ -14,6 +14,13 @@ function EmployeeHistory() {
         ManagerShowHistory();
     }, []);
 
+    const productImages = [
+        '/1.png', // Updated path
+        '/2.png',        // Updated path
+        '/3.png',      // Updated path
+    ];
+
+
     const ManagerShowHistory = async () => {
         try {
             const ManagerResponse = await api.get("api/managers/history/")
@@ -41,33 +48,35 @@ function EmployeeHistory() {
     return (
         <div className="basket-page">
             <Structure />
+            <div  style={{ minHeight: "100vh" }}>
             <h1 className="basket-header" style={{ marginLeft:'13px', marginRight:'13px'}}>Your History</h1>
             {products.length > 0 ? (
-                <div>
+                <div style={{width:"100%"  }}>
                     {products.map((product, index) => (
-                        <div key={index} className="product-item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft:'13px', marginRight:'13px' }}>
+                        <div key={index} className="product-item-cart" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #ccc' , width: '80%'}}>
                             <div>
                                 <h3>{product.product_name}</h3>
-                                <p><strong>Price: {product.product_price}</strong></p>
+                                <p><strong>Price: {product.product_price}$</strong></p>
                                 <p><strong>Quantity: {product.quantity}</strong></p>
                                 <br></br>
-                                <h3>Total: {product.product_price * product.quantity}</h3>
+                                <h3>Total: {product.product_price * product.quantity}$</h3>
                             </div>
-                            {product.picture && (
-                                <img 
-                                    src={product.picture} 
-                                    alt={product.name} 
-                                    className="product-image" 
+                             <div style={{marginLeft: '30px'}}>
+                                <img
+                                    src={productImages[Math.floor(Math.random() * productImages.length)]} 
+                                    alt={product.name}
+                                    className="product-image-history" 
                                     style={{ width: '120px', height: '120px', marginLeft: '20px', objectFit: 'cover' }}
-                                />                                                   
+                                />
+                                </div>                                                    
 
-                            )}
-                        </div>
+                            </div>
                     ))}
                 </div>
             ) : (
-                <p>No products found in your history.</p>
+            <h3 style={{ textAlign: 'center' }}>No products found in your history.</h3>
             )}
+            </div>
                                         <Tail/>
         </div>
     );

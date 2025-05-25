@@ -22,6 +22,12 @@ function Dashboard() {
         showproducts();
     }, []);
     
+const productImages = [
+        '/1.png', // Updated path
+        '/2.png',        // Updated path
+        '/3.png',      // Updated path
+    ];
+
     const ShowHistory = async () => {
         try {
             const response = await api.get("api/employees/list/");
@@ -199,7 +205,7 @@ function Dashboard() {
             <select
                 value={currentView}
                 onChange={(e) => setCurrentView(e.target.value)}
-                style={{justifyContent: 'center', padding: '10px', fontSize: '16px', alignContent: 'center', textAlign: 'center', content: 'center', margin: '20px 0' }}
+                className="product-sort-select"
             >
                 <option>Select</option>
                 <option value="highestSold">Lowest sales</option>
@@ -217,7 +223,9 @@ function Dashboard() {
         <div>
             <div style={{display: 'flex', flexDirection: 'row', content: 'center', justifyContent: 'center', alignItems: 'center', padding: '10px', borderRadius: '10px', gap: '20px'}}> 
             <h3 style={{alignContent: 'center', textAlign: 'center'}}>Sort by: </h3>
-            <select onChange={(e) => setCurrentView1(e.target.value)} style={{justifyContent: 'center', padding: '10px', fontSize: '16px', alignContent: 'center', textAlign: 'center', content: 'center', margin: '20px 0' }}
+            <select onChange={(e) => setCurrentView1(e.target.value)}                           
+            className="product-sort-select"
+
             >
                 <option>Select</option>
                 <option value="highestSales">Highest sales</option>
@@ -241,7 +249,7 @@ function Dashboard() {
                             width: '300px',
                         }}>
                             <img
-                                src={product.picture}
+                                src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -277,7 +285,7 @@ function Dashboard() {
                             width: '300px',
                         }}>
                             <img
-                                src={product.picture}
+                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -313,7 +321,7 @@ function Dashboard() {
                             width: '300px',
                         }}>
                             <img
-                                src={product.picture}
+                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -349,7 +357,7 @@ function Dashboard() {
                             width: '300px',
                         }}>
                             <img
-                                src={product.picture}
+                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -376,11 +384,11 @@ function Dashboard() {
         <div>
         <div className="dashboard-container">
             <Structure />
-            <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginTop: '30px', marginBottom: '250px', marginLeft:'13px', marginRight:'13px' }}> 
+            <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginTop: '30px', marginBottom: '100px', marginLeft:'13px', marginRight:'13px', minHeight:"100vh" }}> 
                 <h1 className="basket-header" style={{textAlign: 'center'}}>Dashboard</h1>
                 <hr style={{ border: '1px solid #ccc', width: '100%' }} />
 
-                <h3 style={{textAlign: 'center'}}>Choose what to show:</h3>
+                <h3 style={{textAlign: 'center', fontSize:"1.5rem"}}>Choose what to show:</h3>
 
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', margin: '20px 0' }}>
                     <button 
