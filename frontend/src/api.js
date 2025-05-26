@@ -8,11 +8,11 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem(ACCESS_TOKEN);
-        console.log("Request Interceptor - Access Token from localStorage:", token); // Log retrieved access token
+      //  console.log("Request Interceptor - Access Token from localStorage:", token); // Log retrieved access token
 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-            console.log("Request Interceptor - Authorization Header set:", config.headers.Authorization); // Log the set header
+          //  console.log("Request Interceptor - Authorization Header set:", config.headers.Authorization); // Log the set header
         }
         return config;
     },
@@ -27,7 +27,7 @@ let hasReloadedOnceForServerError = false;
 
 api.interceptors.response.use(
     (response) => {
-        console.log("Response Interceptor - Successful Response:", response); // Log successful responses
+    //    console.log("Response Interceptor - Successful Response:", response); // Log successful responses
         return response;
     },
     async (error) => {
