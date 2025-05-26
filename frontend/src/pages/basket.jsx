@@ -308,7 +308,7 @@ catch (err) {
                             </div>
                             {product.picture && (
                                 <img
-    src={productImages[Math.floor(Math.random() * productImages.length)]}
+                                        src={productImages[product.id % productImages.length]}
                                     alt={product.product_name}
                                     style={{
                                         width: '120px',

@@ -7,8 +7,19 @@ import Tail from "../components/Tail";
 function History() {
 const [products, setProducts] = useState([]); 
 const [length, setLength] = useState(""); 
+const [showMessage, setShowMessage] = useState(false);
+
        useEffect(() => {
         ShowHistory(); 
+
+                     if (products.length  < 1){
+
+  const timer = setTimeout(() => {
+    setShowMessage(true);
+  }, 2000);
+  return () => clearTimeout(timer);
+
+        }
        }, []);
 
       const productImages = [
@@ -66,7 +77,7 @@ return (
                         <div style={{marginLeft: '30px'}}> 
                   
                                 <img
-                                    src={productImages[Math.floor(Math.random() * productImages.length)]} 
+                                        src={productImages[product.id % productImages.length]}
                                     alt={product.name}
                                     className="product-image-history" 
                                     style={{ width: '120px', height: '120px', marginLeft: '20px', objectFit: 'cover' }}
@@ -77,7 +88,17 @@ return (
                 ))}
             </div>
         ) : (
-            <h3 style={{ textAlign: 'center' }}>No products found in your history.</h3>
+
+                   <div>
+                   
+ {showMessage && (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '60vh', width: '100%'}}>
+        <h3 style={{ textAlign: 'center', fontSize: "1.5em", marginTop: "5vh" }}>No products added yet</h3>
+      </div>
+    )}
+
+
+                </div> 
         )}
         </div>
                                     <Tail/>

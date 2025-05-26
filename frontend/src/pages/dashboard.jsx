@@ -249,7 +249,7 @@ const productImages = [
                             width: '300px',
                         }}>
                             <img
-                                src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
+                                        src={productImages[product.id % productImages.length]}
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -285,7 +285,7 @@ const productImages = [
                             width: '300px',
                         }}>
                             <img
-                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
+                                        src={productImages[product.id % productImages.length]}
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -321,7 +321,7 @@ const productImages = [
                             width: '300px',
                         }}>
                             <img
-                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
+                                        src={productImages[product.id % productImages.length]}
                                 alt={product.name}
                                 className="product-image"
                                 style={{
@@ -357,7 +357,7 @@ const productImages = [
                             width: '300px',
                         }}>
                             <img
-                                    src={productImages[Math.floor(Math.random() * productImages.length)]} // Use productImages.length for robustness
+                                        src={productImages[product.id % productImages.length]}
                                 alt={product.name}
                                 className="product-image"
                                 style={{

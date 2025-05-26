@@ -9,9 +9,20 @@ function EmployeeHistory() {
     const [products, setProducts] = useState([]); 
     const [length, setLength] = useState("");
     const [UserType, setUserType] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
 
     useEffect(() => {
         ManagerShowHistory();
+
+                       if (products.length  < 1){
+
+  const timer = setTimeout(() => {
+    setShowMessage(true);
+  }, 2000);
+  return () => clearTimeout(timer);
+
+        }
+    
     }, []);
 
     const productImages = [
@@ -26,7 +37,7 @@ function EmployeeHistory() {
             const ManagerResponse = await api.get("api/managers/history/")
             if (ManagerResponse.data && (ManagerResponse.status === 200 || ManagerResponse.status === 201)) {
                 setProducts(ManagerResponse.data); 
-         //       console.log("info:", ManagerResponse.data);
+               console.log("info:", ManagerResponse.data);
             //    setLength(ManagerResponse.data.length); 
             } else {
                 console.log("Failed to get user info", ManagerResponse.status);
@@ -63,8 +74,8 @@ function EmployeeHistory() {
                             </div>
                              <div style={{marginLeft: '30px'}}>
                                 <img
-                                    src={productImages[Math.floor(Math.random() * productImages.length)]} 
-                                    alt={product.name}
+                                    src={productImages[index % productImages.length]}
+                                    alt={product.product_name}
                                     className="product-image-history" 
                                     style={{ width: '120px', height: '120px', marginLeft: '20px', objectFit: 'cover' }}
                                 />
@@ -74,8 +85,18 @@ function EmployeeHistory() {
                     ))}
                 </div>
             ) : (
-            <h3 style={{ textAlign: 'center' }}>No products found in your history.</h3>
-            )}
+
+                <div>
+                   
+ {showMessage && (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '60vh', width: '100%'}}>
+        <h3 style={{ textAlign: 'center', fontSize: "1.5em", marginTop: "5vh" }}>No products in your history yet</h3>
+      </div>
+    )}
+</div>
+
+
+)}
             </div>
                                         <Tail/>
         </div>

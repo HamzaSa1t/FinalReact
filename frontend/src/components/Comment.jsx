@@ -90,41 +90,37 @@ function Comment() {
 
   
 
-return(
-
-
-
+return (
     <div>
-
-
-{UserType === "Customer" && 
-    <div style={{ textAlign: 'left' }}>
-        <form onSubmit={Add} className="form-container" encType="multipart/form-data">
-            <input className="form-input" type="text" value={content} onChange={(e) => setContent(e.target.value)} placeholder="COMMENT" required/>
-            <button className="form-button" type="submit">Add comment</button>
-        </form>
-    </div>
-}
-
-
-        <div className="comments-container">
-            {comments.map((comment, index) => (
-                <div key={index} className="comment">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                       <h2 style={{ margin: "0px" }}>{comment.written_by}</h2>
-                       <p style={{ margin: 0 }}> {new Date(comment.created_at).toLocaleDateString()}</p>
+        {comments.length === 0 ? (
+            <div style={{ textAlign: 'center', margin: '50px 0' }}>
+                <h3>No comments yet</h3>
+            </div>
+        ) : (
+            <div>
+                {UserType === "Customer" &&
+                    <div style={{ textAlign: 'left' }}>
+                        <form onSubmit={Add} className="form-container" encType="multipart/form-data">
+                            <input className="form-input" type="text" value={content} onChange={(e) => setContent(e.target.value)} placeholder="COMMENT" required />
+                            <button className="form-button" type="submit">Add comment</button>
+                        </form>
                     </div>
-                                           <hr style={{ border: '1px solid #ccc', width: '95%' }} />
-
-                    <p>{comment.content}</p>
+                }
+                <div className="comments-container">
+                    {comments.map((comment, index) => (
+                        <div key={index} className="comment">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <h2 style={{ margin: "0px" }}>{comment.written_by}</h2>
+                                <p style={{ margin: 0 }}> {new Date(comment.created_at).toLocaleDateString()}</p>
+                            </div>
+                            <hr style={{ border: '1px solid #ccc', width: '95%' }} />
+                            <p>{comment.content}</p>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
-
+            </div>
+        )}
     </div>
-
-
-
 );
 
 

@@ -21,6 +21,7 @@ function ViewProduct() {
     const [number_of_ratings, setNumber_of_ratings] = useState("");
     const [seller, setSeller] = useState("");
     const [createdAt, setCreatedAt] = useState('');
+    const [ id, setId ] = useState("");
 
     const [UserType, setUserType] = useState("");
     const [UserId, setUserId] = useState("");
@@ -50,6 +51,8 @@ function ViewProduct() {
                 setSeller(response.data.seller);
                 setRating(response.data.rating);
                 setNumber_of_ratings(response.data.number_of_ratings);
+                setId(response.data.id);
+                console.log("Product data:", response.data.id);
             } else {
                 console.error("Products not found or data is invalid");
             }
@@ -115,7 +118,7 @@ function ViewProduct() {
                 }
             };    
 
-    return (
+            return (
         <div>
             <Structure />
             <div  style={{paddingTop: '20px'}}>
@@ -123,8 +126,8 @@ function ViewProduct() {
                 <h1 style={{textAlign: 'center'}} >{name}</h1>
                 <hr style={{ border: '1px solid #ccc', width: '95%' }} />
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} /* className="product-image-container" */>
-                <img src={productImages[Math.floor(Math.random() * productImages.length)]} alt={name} /* className="product-image" */ style={{marginTop: '10px', alignContent:'center', height: "50vh", width: "50vh"}}/>
-                </div>                                                                                                                          
+                <img src={productImages[id % productImages.length]} alt={name} /* className="product-image" */ style={{marginTop: '10px', alignContent:'center', height: "50vh", width: "50vh"}}/>
+                </div>
                 <p><strong>Description:</strong> {description ? description : "No description added by seller"}</p>
                 <p><strong>Rating:</strong> {rating} / 5 ( By {number_of_ratings} )</p>
                 <p><strong>Seller:</strong> {seller}</p>
