@@ -1,3 +1,461 @@
+/*
+ * Base styles for the body and header.
+ * Using 'margin: 0' to remove default browser margins.
+ * Setting a background color for the entire page.
+ */
 body {
-    background-color: yellow;
+  margin: 0;
+  background-color: #F5F5DC;
+}
+
+/*
+ * Header should always take full width.
+ */
+header {
+  width: 100%;
+}
+
+/*
+ * Setting a base font-family for all div elements.
+ */
+div {
+  font-family: Arial, sans-serif;
+}
+
+/*
+ * Styles for forms, ensuring they are responsive.
+ * 'max-width' prevents the form from becoming too wide on large screens.
+ * 'width: 90%' ensures it shrinks on smaller screens.
+ * 'padding' is adjusted using 'rem' for better scaling.
+ */
+form {
+  background-color: #fff;
+  padding: 1.25rem; /* 20px converted to rem (assuming 1rem = 16px) */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Maximum width for the form */
+  width: 90%; /* Responsive width for smaller screens */
+  margin: 1.25rem auto; /* Top/bottom margin and auto for horizontal centering */
+}
+
+/*
+ * Form heading styles.
+ * Font size is set in 'rem' for responsiveness.
+ */
+form h2 {
+  color: #333;
+  font-size: 1.5rem; /* 24px converted to rem */
+  margin-bottom: 1.25rem; /* 20px converted to rem */
+}
+
+/*
+ * Form label styles.
+ * Margin-top is set in 'rem'.
+ */
+form label {
+  font-weight: bold;
+  margin-top: 0.625rem; /* 10px converted to rem */
+}
+
+/*
+ * Styles for form inputs and textareas.
+ * 'width: 100%' ensures they fill their container.
+ * 'padding' and 'margin' are adjusted using 'rem'.
+ * 'box-sizing: border-box' is crucial to include padding/border in the element's total width.
+ */
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.5rem; /* 8px converted to rem */
+  margin: 0.5rem 0 1rem; /* 8px and 16px converted to rem */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/*
+ * Styles for the submit button.
+ * 'padding' and 'font-size' are adjusted using 'rem'.
+ */
+form input[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 0.625rem 1.25rem; /* 10px and 20px converted to rem */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem; /* 16px converted to rem */
+}
+
+/*
+ * Hover effect for the submit button.
+ */
+form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/*
+ * Product list container using Flexbox for a responsive grid.
+ * 'display: flex' and 'flex-wrap: wrap' are key for wrapping items.
+ * 'gap' provides spacing between items.
+ * 'padding' and 'margin' are adjusted for overall layout.
+ * 'justify-content: center' to center the items when they don't fill a row.
+ */
+.products-list {
+  padding: 1rem; /* Adjusted from 13px */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem; /* 20px converted to rem */
+  justify-content: center; /* Center items in the list */
+  margin: 0 auto; /* Center the entire product list container */
+  max-width: 100%; /* Changed from 1200px to 100% to ensure it fills the screen */
+}
+
+/*
+ * Individual product item styles.
+ * 'padding' is significantly reduced and made responsive using 'rem'.
+ * 'width' is set using percentages and adjusted via media queries to control columns.
+ * 'box-sizing: border-box' ensures padding is included in the width calculation.
+ */
+.product-item-home {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* Include padding in the width calculation */
+  padding: 0.5rem; /* Significantly reduced from 100px and made responsive */
+  width: 100%; /* Default to full width on small screens (mobile-first) */
+  max-width: 30%; /* Increased from 350px to 45% to allow for more content on smaller screens */
+  position: relative; /* Needed for absolute positioning of price */
+  cursor: pointer; /* Inherited from inline style */
+}
+
+/*
+ * Hover effects for product items.
+ */
+.product-item-home:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/*
+ * Styles for the image container within a product item.
+ * Ensures the image is centered.
+ */
+.product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.625rem; /* Added margin for spacing */
+}
+
+/*
+ * Product image styles.
+ * 'width: 100%' and 'height: auto' are already perfectly responsive.
+ * Added max-width and max-height to control image size within the card.
+ */
+.product-image {
+  width: 100%; /* Ensure image takes full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 85%; /* Reduced from 100% to match inline style */
+  max-height: 250px; /* Max height for the image */
+  border-radius: 10px;
+}
+
+/*
+ * Product item heading styles.
+ * Font size is already in 'em', which is relative.
+ * Added margin-bottom: 0px to match inline style.
+ * Added text wrapping properties.
+ */
+.product-item-home h1 {
+  font-size: 1.5em; /* Matches h3 font-size, assuming h1 is used for product name */
+  margin-bottom: 0; /* Matches inline style */
+  color: #000000; /* Dark color for better readability */
+  word-wrap: break-word; /* Allows long words to break and wrap */
+  overflow-wrap: break-word; /* Standard property for word breaking */
+  white-space: normal; /* Ensures text wraps normally */
+}
+
+/*
+ * Horizontal rule (line) styles within product item.
+ */
+.product-item-home hr {
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-top: 0.625rem; /* Add some space above the line */
+  margin-bottom: 0.625rem; /* Add some space below the line */
+}
+
+/*
+ * Styles for h4 elements within product-item (seller, created_at).
+ * Added text wrapping properties.
+ */
+.product-item-home h4 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  margin-bottom: 0.625rem; /* Ensure consistent spacing */
+}
+
+/*
+ * Product price styles.
+ * Font size is already in 'em'.
+ */
+.product-price {
+  font-size: 1.2em;
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 0.625rem; /* 10px converted to rem */
+}
+
+/*
+ * Product description styles.
+ * Font size is already in 'em'.
+ * Added text wrapping properties.
+ */
+.product-description {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 0.625rem; /* 10px converted to rem */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/*
+ * Product rating styles.
+ * Font size is already in 'em'.
+ */
+.product-rating {
+  font-size: 1em;
+  color: #ff9f00;
+  margin-bottom: 0.625rem; /* 10px converted to rem */
+}
+
+/*
+ * Product seller and created at styles.
+ * Font size is already in 'em'.
+ */
+.product-seller,
+.product-created-at {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 0.625rem; /* 10px converted to rem */
+}
+
+/*
+ * Container for product action buttons (Edit, Add to cart, Delete).
+ * Uses flexbox to arrange buttons.
+ * 'flex-wrap: wrap' ensures buttons stack on smaller screens.
+ * 'gap' provides spacing between buttons.
+ */
+.product-actions {
+  display: flex;
+  flex-direction: row; /* Default to row */
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+  gap: 0.525rem; /* 10px gap between buttons */
+  margin-bottom: 0.625rem; /* Space below buttons */
+  margin-top: 1.5rem; /* Space below buttons */
+
+}
+
+/*
+ * Product item button styles.
+ * 'padding' is adjusted using 'rem'.
+ */
+.product-item-home button {
+  padding: 0.625rem 0.9375rem; /* 10px and 15px converted to rem */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Specific style for the Edit button */
+.product-item-home .edit-button {
+  background-color: #4CAF50; /* Specific color for Edit button */
+}
+
+.product-item-home .add-to-cart-button {
+  background-color: #28a745; 
+border: none;
+  border-radius: 5px;
+  cursor: pointer;
+   
+}
+
+/*`
+ * Hover effect for product item buttons.
+ */
+.product-item-home button .edit-button :hover {
+  background-color: #0056b3;
+}
+
+/*
+ * Styles for the absolutely positioned price tag.
+ */
+.product-price-tag {
+  position: absolute;
+  bottom: 0.625rem; /* 10px from bottom */
+  right: 0.625rem; /* 10px from right */
+  margin-bottom: 1vh;
+}
+
+/*
+ * Media Queries for Responsive Layouts
+ *
+ * Mobile-first approach: Default styles are for mobile.
+ * We use 'min-width' to apply styles for screens *larger than or equal to* the breakpoint.
+ */
+
+/* Small Tablets (e.g., landscape phones, small tablets) */
+@media (min-width: 430px) and (max-width: 767px) {
+
+  .products-list{
+    padding: 0rem; /* Increased padding for larger screens */
+  }
+  .product-item-home {
+    width: 15.25rem; /* 0.625rem is half of the 1.25rem gap */
+    background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* Include padding in the width calculation */
+  padding: 0.5rem; /* Significantly reduced from 100px and made responsive */
+  position: relative; /* Needed for absolute positioning of price */
+  cursor: pointer; /* Inherited from inline style */
+    max-width: 45%; /* Increased from 350px to 45% to allow for more content on smaller screens */
+
+  }
+  .product-item-home h1 {
+    font-size: 1.2em; /* Reduced font size for better fit */
+    margin-bottom: 0.5rem; /* Added margin for spacing */
+    color: #000000; /* Dark color for better readability */
+    word-wrap: break-word; /* Allows long words to break and wrap */
+    overflow-wrap: break-word; /* Standard property for word breaking */
+    white-space: normal; /* Ensures text wraps normally */
+  } 
+
+  .product-item-home .product-image-container {
+    height: 150px;
+    width: 150px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 5px;
+  }
+
+  .product-item-home:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .product-actions {
+    flex-direction: row; /* Ensure buttons stay in a row if there's space */
+  }
+
+  .product-item-home .add-to-cart-button {
+    padding: 0.4rem 0.6rem; /* Reduced padding */
+    font-size: 0.8rem; /* Reduced font size */
+  cursor: pointer;
+  }
+  .product-price-tag{
+    font-size: 0.8rem; /* Reduced font size */
+  }
+  .form-container  {
+   width: 80%;
+  }
+}
+
+
+
+@media (min-width: 390px) and (max-width: 429px) {
+
+.product-price-tag h1{
+    font-size: 0.1rem;
+    font-weight: bold;
+   
+  }
+  .form-container  {
+   width: 80%;
+}
+
+  .products-list{
+    padding: 0rem; /* Increased padding for larger screens */
+  }
+  .product-item-home {
+    width: 15.25rem; /* 0.625rem is half of the 1.25rem gap */
+    background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* Include padding in the width calculation */
+  padding: 0.5rem; /* Significantly reduced from 100px and made responsive */
+  position: relative; /* Needed for absolute positioning of price */
+  cursor: pointer; /* Inherited from inline style */
+    max-width: 45%; /* Increased from 350px to 45% to allow for more content on smaller screens */
+
+  }
+  .product-item-home h1 {
+    font-size: 1.2em; /* Reduced font size for better fit */
+    margin-bottom: 0.5rem; /* Added margin for spacing */
+    color: #000000; /* Dark color for better readability */
+    word-wrap: break-word; /* Allows long words to break and wrap */
+    overflow-wrap: break-word; /* Standard property for word breaking */
+    white-space: normal; /* Ensures text wraps normally */
+  } 
+
+  .product-item-home .product-image-container {
+    height: 150px;
+    width: 150px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-top: 5px;
+  }
+
+  .product-item-home:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .product-actions {
+    flex-direction: row; /* Ensure buttons stay in a row if there's space */
+  }
+
+  .product-item-home .add-to-cart-button {
+    padding: 0.4rem 0.6rem; /* Reduced padding */
+    font-size: 0.8rem; /* Reduced font size */
+  cursor: pointer;
+  }
+  .product-price-tag{
+    font-size: 0.8rem; /* Reduced font size */
+  }
+  .form-container  {
+   width: 80%;
+  }
+}
+
+/* Larger Tablets and Laptops */
+@media (min-width: 768px) {
+  .product-item-home {
+    /* Three columns: Each item takes roughly 33.33% minus the gap */
+    width: calc(33.33% - 0.833rem); /* 0.833rem is one-third of the 1.25rem gap */
+  }
+}
+
+/* Desktops */
+@media (min-width: 1024px) {
+  /* No significant change needed for product-item width if 3 columns is desired,
+     but you could add more columns or larger gaps here if needed. */
+}
+
+/* Optional: Adjust product list padding for larger screens if desired */
+@media (min-width: 1200px) {
+  .products-list {
+    padding: 2rem; /* More padding on very large screens */
+  } 
 }
