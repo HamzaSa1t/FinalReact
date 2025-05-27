@@ -173,7 +173,7 @@ function Basket() {
                 const updatedProducts = productsList.map(p =>
                     p.id === pk ? { ...p, quantity: newQuantity } : p
                 );
-                // Re-sort after quantity change to maintain order, though typically quantity change wouldn't change alpha order
+                // Re-sort after quantity change to maintain order
                 const reSortedProducts = [...updatedProducts].sort((a, b) => {
                     const nameA = a.product_name ? String(a.product_name).toLowerCase() : '';
                     const nameB = b.product_name ? String(b.product_name).toLowerCase() : '';
@@ -186,9 +186,7 @@ function Basket() {
                 setQuantity(quantity.map(q =>
                     q.id === pk ? { ...q, quantity: newQuantity } : q
                 ));
-                // It's often better to just update state directly and then if needed, call getProducts() for full refresh.
-                // Calling getProducts() here will re-fetch everything and then sort again, which is fine but less performant for frequent updates.
-                // getProducts(); // This line might be redundant if you update state correctly above
+                // Removed getProducts() here
                 CalculateCharge();
             } else {
                 //        console.log("Failed to update product:", response.status);
@@ -230,7 +228,7 @@ function Basket() {
                 setQuantity(quantity.map(q =>
                     q.id === pk ? { ...q, quantity: newQuantity } : q
                 ));
-                // getProducts(); // This line might be redundant if you update state correctly above
+                // Removed getProducts() here
                 CalculateCharge();
             } else {
                 //         console.log("Failed to update product:", response.status);
@@ -239,7 +237,7 @@ function Basket() {
         } catch (err) {
             console.log("Error during updating quantity:", err);
             if (err.response) {
-                //          console.log("Response error data:", err.response.data);
+                //         console.log("Response error data:", err.response.data);
             }
             alert("Error occurred during updating quantity.");
         }
@@ -300,7 +298,7 @@ function Basket() {
                 <h1 className="basket-header" style={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>Your Items</h1>
                 {productsList.length > 0 ? (
                     <div>
-                        {productsList.map((product, index) => (
+                        {productsList.map((product) => (
                             <div key={product.id} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '20px', backgroundColor: "#fff", width: '85%', padding: '10px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '15px' }}>
                                 <div style={{ textAlign: 'left', paddingLeft: '20px', paddingRight: '20px' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
