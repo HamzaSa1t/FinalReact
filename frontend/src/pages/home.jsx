@@ -1,29 +1,25 @@
+// Home.jsx
 import { useState, useEffect, useRef } from "react";
 import api from "../api";
-import "../styles/home.css"; // Ensure this path is correct for your CSS file
+import "../styles/home.css";
 import Structure from "../components/Structure.jsx";
 import { useNavigate } from 'react-router-dom';
-import ToDelete from "../components/DeleteProduct.jsx";
+import ToDelete from "../components/DeleteProduct.jsx"; // Ensure this is the correct path
 import React from "react";
 import { useParams } from 'react-router-dom';
 import Tail from "../components/Tail.jsx";
 
 function Home() {
-    const { pk } = useParams();
-    // const [length, setLength] = useState(""); // This state is redundant if products.length is used directly
+    const { pk } = useParams(); // pk is usually for a single product view, might not be needed here directly
     const [UserType, setUserType] = useState("");
     const [UserId, setUserId] = useState("");
     const [products, setProducts] = useState([]);
-    // const [seller, setSeller] = useState(""); // This state seems unused
     const navigate = useNavigate();
     const scrollableDivRef = useRef(null);
 
-    // New states for loading and delayed message
-    const [isLoading, setIsLoading] = useState(true); // Tracks if products are being fetched
-    const [showDelayedNoProductsMessage, setShowDelayedNoProductsMessage] = useState(false); // Controls the delayed "No products" message
-
-    const noProductsTimer = useRef(null); // Ref to hold the timeout ID for cleanup
-
+    const [isLoading, setIsLoading] = useState(true);
+    const [showDelayedNoProductsMessage, setShowDelayedNoProductsMessage] = useState(false);
+    const noProductsTimer = useRef(null);
 
     const productImages = [
         '/1.png',
@@ -32,25 +28,22 @@ function Home() {
     ];
 
     useEffect(() => {
-        // Fetch initial data
         getType();
         getID();
         getProducts(); // This will handle setting isLoading and the delayed message
 
-        // Cleanup for the useEffect
         return () => {
-            // Clear any pending timeout if the component unmounts
             if (noProductsTimer.current) {
                 clearTimeout(noProductsTimer.current);
             }
         };
-    }, []); // Empty dependency array: runs once on mount
+    }, []);
 
     useEffect(() => {
         // This useEffect depends on 'products' to restore scroll position
         // This is good for ensuring scroll is restored *after* products are loaded
         restoreScrollPosition();
-    }, [products]);
+    }, [products]); // Dependency on 'products' array
 
     const saveScrollPosition = () => {
         if (scrollableDivRef.current) {
@@ -68,10 +61,9 @@ function Home() {
     };
 
     const getProducts = async () => {
-        setIsLoading(true); // Start loading when product fetch begins
-        setShowDelayedNoProductsMessage(false); // Reset message state for new fetch
+        setIsLoading(true);
+        setShowDelayedNoProductsMessage(false);
 
-        // Clear any previous timer if getProducts is called again
         if (noProductsTimer.current) {
             clearTimeout(noProductsTimer.current);
         }
@@ -80,25 +72,18 @@ function Home() {
             const response = await api.get("api/products/list/");
             if (response.data && Array.isArray(response.data) && response.data.length > 0) {
                 setProducts(response.data);
-                // setLength(response.data.length); // Redundant if products.length is used
-                setIsLoading(false); // Finished loading, products found
+                setIsLoading(false);
             } else {
-                setProducts([]); // Ensure products is an empty array if no data or invalid
-                // setLength(0); // Redundant
-                setIsLoading(false); // Finished loading, no products found
-
-                // If no products, set a timeout to show the "No products" message after 2 seconds
+                setProducts([]);
+                setIsLoading(false);
                 noProductsTimer.current = setTimeout(() => {
                     setShowDelayedNoProductsMessage(true);
-                }, 2000); // 2-second delay as per your original request
+                }, 2000);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
-            setProducts([]); // Set products to empty array on error
-            // setLength(0); // Redundant
-            setIsLoading(false); // Finished loading (with error)
-
-            // Even on error, show the delayed message if products list is empty
+            setProducts([]);
+            setIsLoading(false);
             noProductsTimer.current = setTimeout(() => {
                 setShowDelayedNoProductsMessage(true);
             }, 2000);
@@ -118,8 +103,7 @@ function Home() {
     };
 
     const getID = () => {
-        api
-            .get("api/UserDetails/")
+        api.get("api/UserDetails/")
             .then((res) => {
                 if (res.data && res.data.username) {
                     setUserId(res.data.username);
@@ -147,53 +131,28 @@ function Home() {
         }
     };
 
-    // These content components are currently empty.
-    // Ensure they return meaningful content if they are meant to display something specific to user types.
-    // For this example, I'm assuming the main product list is relevant for all types.
-    const CustomerHomePageContent = () => {
-        return <div className="customer-home-content" style={{ minHeight: "100vh" }}>{/* ... */}</div>;
-    };
-
-    const ManagerHomePageContent = () => {
-        return <div className="manager-home-content" style={{ minHeight: "100vh" }}>{/* ... */}</div>;
-    };
-
-    const EmployeeHomePageContent = () => {
-        return (
-            <div className="employee-home-content" style={{ minHeight: "100vh" }}>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-            </div>
-        );
-    };
-
     // The ContentComponent is declared but not used in the return JSX below.
     // If you intend to use it to conditionally render different layouts based on UserType,
     // you would place <ContentComponent /> in your main return block.
-    const ContentComponent = UserType === 'Customer' ? CustomerHomePageContent :
-        UserType === 'Manager' ? ManagerHomePageContent :
-            UserType === 'Employee' ? EmployeeHomePageContent :
+    const ContentComponent = UserType === 'Customer' ? () => <div className="customer-home-content" style={{ minHeight: "100vh" }}></div> :
+        UserType === 'Manager' ? () => <div className="manager-home-content" style={{ minHeight: "100vh" }}></div> :
+            UserType === 'Employee' ? () => <div className="employee-home-content" style={{ minHeight: "100vh" }}><br /><br /><br /><br /></div> :
                 () => <p>Unknown user type.</p>; // Default component
 
     return (
         <div>
             <Structure />
-            {/* Moved inline styles to CSS where possible, but kept minHeight and marginTop for this specific div for now */}
             <div className="main-content-area" style={{ minHeight: "100vh", marginTop: '20px' }}>
 
                 {isLoading ? (
-                    // Display loading message while products are being fetched
                     <div className="message-container">
-                        <h3 style={{fontSize: "2rem"}}>Loading products...</h3>
+                        <h3 style={{ fontSize: "2rem" }}>Loading products...</h3>
                     </div>
                 ) : products.length > 0 ? (
-                    // Display products if loading is complete and products are found
                     <div className="products-list" ref={scrollableDivRef}>
                         {products.map((product) => (
                             <div
-                                key={product.id} // Ensure product.id is unique for keys
+                                key={product.id}
                                 className="product-item-home"
                                 onClick={() => navigate(`/ViewProduct/${product.id}`)}
                             >
@@ -207,7 +166,7 @@ function Home() {
                                 <h1 className="product-name">{product.name}</h1>
                                 <hr className="product-divider" />
                                 <h4>Seller: {product.seller}</h4>
-                                <h4>{product.created_at ? product.created_at.split('T')[0] : 'N/A'}</h4> {/* Added check for created_at */}
+                                <h4>{product.created_at ? product.created_at.split('T')[0] : 'N/A'}</h4>
 
                                 <div className="product-actions" onClick={(e) => e.stopPropagation()}>
                                     {(UserId === product.seller) && (
@@ -247,16 +206,13 @@ function Home() {
                         ))}
                     </div>
                 ) : (
-                    // If not loading, and no products are found:
                     showDelayedNoProductsMessage ? (
-                        // Display "No products added yet" AFTER the 2-second delay
                         <div className="message-container">
                             <h3 className="message-text">No products added yet.</h3>
                         </div>
                     ) : (
-                        // Display this briefly after loading is done but before the delayed message appears
                         <div className="message-container">
-                            <h3 style= {{fontSize: "2rem"}}>Checking for products...</h3>
+                            <h3 style={{ fontSize: "2rem" }}>Checking for products...</h3>
                         </div>
                     )
                 )}
@@ -267,6 +223,3 @@ function Home() {
 }
 
 export default Home;
-
-// documentation  - comments and logs
- 

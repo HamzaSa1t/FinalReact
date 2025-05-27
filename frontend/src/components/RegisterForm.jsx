@@ -132,7 +132,7 @@ return (
 
 <form onSubmit={handleRegister} className="form-container">
 
-<h1>Register++++DEMO</h1>
+<h1>Register</h1>
 
 <input
 

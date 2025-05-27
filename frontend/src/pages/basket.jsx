@@ -347,7 +347,7 @@ function Basket() {
                                         }}
                                     >-</button>
                                     <br></br>
-                                    <button onClick={() => deleteProduct(product.id)} style={{ marginTop: "5vh" }}>Remove</button>
+                                <button onClick={() => deleteProduct(product.id)} style={{marginTop:"5vh", marginLeft:"0px"}}>Remove</button>
                                 </div>
                                 {product.picture && (
                                     <img
