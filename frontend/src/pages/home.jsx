@@ -186,7 +186,7 @@ function Home() {
                 {isLoading ? (
                     // Display loading message while products are being fetched
                     <div className="message-container">
-                        <h3 className="message-text">Loading products...</h3>
+                        <h3 style={{fontSize: "2rem"}}>Loading products...</h3>
                     </div>
                 ) : products.length > 0 ? (
                     // Display products if loading is complete and products are found
@@ -256,7 +256,7 @@ function Home() {
                     ) : (
                         // Display this briefly after loading is done but before the delayed message appears
                         <div className="message-container">
-                            <h3 className="message-text">Checking for products...</h3>
+                            <h3 style= {{fontSize: "2rem"}}>Checking for products...</h3>
                         </div>
                     )
                 )}
@@ -267,3 +267,6 @@ function Home() {
 }
 
 export default Home;
+
+// documentation  - comments and logs
+ 

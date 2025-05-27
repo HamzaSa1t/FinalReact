@@ -172,7 +172,7 @@ function EditProduct() {
                             e.target.style.backgroundColor = '#888';
                             window.showFeatureUnavailableTooltip = true;
                             const tooltip = document.createElement('div');
-                            tooltip.innerText = 'This feature is unavailable for now cause we did not pay for Amazon S3 service. An image will be created for this product by the website automatically';
+                            tooltip.innerText = 'This feature is unavailable for now cause we did not subscribe to Amazon S3 service. An image will be created for this product automatically';
                             tooltip.style.position = 'fixed';
                             tooltip.style.zIndex = 9999;
                             tooltip.style.background = '#333';

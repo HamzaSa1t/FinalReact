@@ -64,7 +64,7 @@ function EmployeeHistory() {
             {products.length > 0 ? (
                 <div style={{width:"100%"  }}>
                     {products.map((product, index) => (
-                        <div key={index} className="product-item-cart" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #ccc' , width: '80%'}}>
+                        <div key={index} className="product-item-cart" style={{  boxShadow: '0 2px 4px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #ccc' , width: '80%'}}>
                             <div>
                                 <h3>{product.product_name}</h3>
                                 <p><strong>Price: {product.product_price}$</strong></p>
@@ -86,7 +86,7 @@ function EmployeeHistory() {
                 </div>
             ) : (
 
-                <div>
+                <div style={{minHeight:"200vh"}}>
                    
  {showMessage && (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '60vh', width: '100%'}}>

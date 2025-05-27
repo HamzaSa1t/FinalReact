@@ -41,6 +41,7 @@
   align-items: center;
   margin-bottom: 0.625rem;                   
 } */      
+
  
 @media (min-width: 430px) and (max-width: 767px) {
 
@@ -53,3 +54,23 @@
 
 }
 }
+
+@media (min-width: 390px) and (max-width: 429px) {
+
+.product-details {
+       width: 85%;
+    align-items: center;
+      justify-content: center;
+  align-items: center;
+}
+
+.product-details image {
+    width: 100%;
+    height: auto;
+    background-color: black;
+  }
+}
+
+
+
+  

@@ -129,9 +129,9 @@ body {
     font-size: 0.2rem; /* Smaller font size for product name */
   }
 
-  .item p {
+  /* .item p {
     font-size: 0.9rem; /* Smaller font for price/quantity */
-  }
+  } */
 
   .item h3:last-child {
     font-size: 1.2rem; /* Smaller font for total */
@@ -156,4 +156,10 @@ body {
     margin: 0.8rem auto; /* Reduced vertical margin on mobile */
   }
 
-}
+
+
+
+
+  
+
+

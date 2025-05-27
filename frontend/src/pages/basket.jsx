@@ -257,14 +257,15 @@ catch (err) {
             {productsList.length > 0 ?  (
                 <div>
                     {productsList.map((product, index) => (
-                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft:'20px', backgroundColor: "#fff", width: '85%', padding: '10px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
+                        <div key={index} className="product-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft:'20px', backgroundColor: "#fff", width: '85%', padding: '10px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '15px' }}>
                             <div style={{ textAlign: 'left', paddingLeft:'20px', paddingRight:'20px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <h2>{product.product_name}</h2>
                                 </div>
-                                <p>
-                                <strong> Quantity: </strong>
+
+                                   <p style={{marginBottom:"3vh"}}><strong>Price: {product.product_price}$</strong></p>
                                     <button
+                                    className="button-"
                                         onClick={() => increase(product.id)}
                                         style={{
                                             backgroundColor: 'white',
@@ -275,6 +276,7 @@ catch (err) {
                                             height: '25px',
                                             cursor: 'pointer',
                                             margin: '0 8px',
+                                            marginLeft: "0px",
                                             fontSize: '16px',
                                             display: 'inline-flex',
                                             alignItems: 'center',
@@ -284,6 +286,7 @@ catch (err) {
                                     >+</button>
                                     {product.quantity}
                                     <button
+                                        className="button-"
                                         onClick={() => decrease(product.id)}
                                         style={{
                                             backgroundColor: 'white',
@@ -301,18 +304,16 @@ catch (err) {
                                             boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                                         }}
                                     >-</button>
-                                </p>
-
-                                <p><strong>Price: {product.product_price}</strong></p>
-                                <button onClick={() => deleteProduct(product.id)}>Remove</button>
+ <br></br>
+                                <button onClick={() => deleteProduct(product.id)} style={{marginTop:"5vh"}}>Remove</button>
                             </div>
                             {product.picture && (
                                 <img
                                         src={productImages[product.id % productImages.length]}
                                     alt={product.product_name}
                                     style={{
-                                        width: '120px',
-                                        height: '120px',
+                                        width: '140px',
+                                        height: '140px',
                                         objectFit: 'cover',
                                         borderRadius: '5px',
                                         marginLeft: '0px',
@@ -321,7 +322,7 @@ catch (err) {
                             )}
                         </div>
                     ))}   
-                    <div style={{ display: 'inline-block', gap: '10px', backgroundColor: 'white', padding: "10px", marginLeft: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', paddingRight: '20px', paddingLeft: '20px', borderRadius: '10px', marginTop: '20px', marginBottom: '20px', width: '40%'}}>
+                    <div style={{ display: 'inline-block', gap: '10px', backgroundColor: 'white', padding: "10px", paddingRight:"100px", marginLeft: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', paddingRight: '20px', paddingLeft: '20px', borderRadius: '10px', marginTop: '20px', marginBottom: '20px', width: '60%'}}>
                         
 
                         <h2 style={{padding:'4px'}}> Final Charge: {charge}$</h2>
@@ -368,7 +369,7 @@ catch (err) {
                 </div>
                 
             ) : (
-                                    <h3 style={{ textAlign: 'center' }}>No products found in your history.</h3>
+                                    <h3 style={{ textAlign: 'center', fontSize:"1.2rem" }}>No products found in your history.</h3>
 
 )}
 

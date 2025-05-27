@@ -94,7 +94,7 @@ return (
     <div>
         {comments.length === 0 ? (
             <div style={{ textAlign: 'center', margin: '50px 0' }}>
-                <h3>No comments yet</h3>
+                <h3 style={{fontSize: "1.2rem"}}>No comments yet</h3>
             </div>
         ) : (
             <div>

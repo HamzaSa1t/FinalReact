@@ -125,7 +125,7 @@ const productImages = [
                     ))}
                 </div>
             ) : (
-                <p>No products found in your history.</p>
+                <p style={{ fontSize:"1.2em"}}>No products selled yet.</p>
             )}
         </div>
     );
@@ -168,7 +168,7 @@ const productImages = [
                     ))}
                 </div>
             ) : (
-                <p>No products found in your history.</p>
+                <p style={{ fontSize:"1.2em"}}>No products selled yet.</p>
             )}
         </div>
     );
@@ -200,7 +200,7 @@ const productImages = [
     const renderEmployees = () => (
         <div>
             <div style={{display: 'flex', flexDirection: 'row', content: 'center', justifyContent: 'center', alignItems: 'center', padding: '10px', borderRadius: '10px', gap: '20px'}}> 
-            <h3 style={{alignContent: 'center', textAlign: 'center'}}>Sort by: </h3>
+            <h3 style={{alignContent: 'center', textAlign: 'center', fontSize:"1.2em"}}>Sort by: </h3>
             
             <select
                 value={currentView}
@@ -222,7 +222,7 @@ const productImages = [
     const renderProducts = () => (
         <div>
             <div style={{display: 'flex', flexDirection: 'row', content: 'center', justifyContent: 'center', alignItems: 'center', padding: '10px', borderRadius: '10px', gap: '20px'}}> 
-            <h3 style={{alignContent: 'center', textAlign: 'center'}}>Sort by: </h3>
+            <h3 style={{alignContent: 'center', textAlign: 'center', fontSize:"1.2em"}}>Sort by: </h3>
             <select onChange={(e) => setCurrentView1(e.target.value)}                           
             className="product-sort-select"
 
