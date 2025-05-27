@@ -78,7 +78,7 @@ return (
                         <p>Price: {product.product_price}$</p>
                         <p>Quantity: {product.quantity}</p>
                         <h1></h1>
-                        <h3>Total:  {product.product_price * product.quantity}$</h3>
+<h3>Total: {(product.product_price * product.quantity).toFixed(2)}$</h3>
                         </div> 
                         <div style={{marginLeft: '30px'}}> 
                   

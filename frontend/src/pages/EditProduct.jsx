@@ -105,7 +105,7 @@ function EditProduct() {
 
     <Structure />
     
-    <div className="main-container">
+    <div className="main-container" >
 
     <form onSubmit={(e) => {
         e.preventDefault();

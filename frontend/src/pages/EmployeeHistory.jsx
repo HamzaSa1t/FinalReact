@@ -70,7 +70,7 @@ function EmployeeHistory() {
                                 <p><strong>Price: {product.product_price}$</strong></p>
                                 <p><strong>Quantity: {product.quantity}</strong></p>
                                 <br></br>
-                                <h3>Total: {product.product_price * product.quantity}$</h3>
+<h3>Total: {(product.product_price * product.quantity).toFixed(2)}$</h3>
                             </div>
                              <div style={{marginLeft: '30px'}}>
                                 <img

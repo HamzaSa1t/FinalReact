@@ -155,7 +155,7 @@ function ViewProduct() {
                         <h3 style={{ fontSize: "2rem" }}>Loading product details...</h3>
                     </div>
                 ) : name !== "" ? (
-                    <div className="product-details">
+                    <div className="product-details" style={{boxShadow: '0 2px 4px rgba(0,0,0,0.2)'}}>
                         <h1 style={{ textAlign: 'center' }}>{name}</h1>
                         <hr style={{ border: '1px solid #ccc', width: '95%' }} />
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
