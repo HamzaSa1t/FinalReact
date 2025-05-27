@@ -92,20 +92,13 @@ function Comment() {
 
 return (
     <div>
+
         {comments.length === 0 ? (
             <div style={{ textAlign: 'center', margin: '50px 0' }}>
                 <h3 style={{fontSize: "1.2rem"}}>No comments yet</h3>
             </div>
         ) : (
             <div>
-                {UserType === "Customer" &&
-                    <div style={{ textAlign: 'left' }}>
-                        <form onSubmit={Add} className="form-container" encType="multipart/form-data">
-                            <input className="form-input" type="text" value={content} onChange={(e) => setContent(e.target.value)} placeholder="COMMENT" required />
-                            <button className="form-button" type="submit">Add comment</button>
-                        </form>
-                    </div>
-                }
                 <div className="comments-container">
                     {comments.map((comment, index) => (
                         <div key={index} className="comment">
@@ -120,6 +113,17 @@ return (
                 </div>
             </div>
         )}
+
+
+        {UserType === "Customer" &&
+                    <div style={{ textAlign: 'left' }}>
+                        <form onSubmit={Add} className="form-container" encType="multipart/form-data">
+                        <h2>Add Comment</h2>
+                            <input className="form-input" type="text" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Great product !" required />
+                            <button className="form-button" type="submit">Add</button>
+                        </form>
+                    </div>
+                }
     </div>
 );
 
@@ -131,11 +135,3 @@ export default Comment;
 
 
 
-
-// content created_at written_by the_product
-// path("products/<int:product_id>/comments/", views.GetComments.as_view(), name="get_comments"),
-// path("products/<int:product_id>/comments/create/", views.CreateComment.as_view(), name="create_comment"),
-
-/* setComments(response.data.content); // Update with the array from the API response
-                console.log("Comments from backend:", response.data.content); // Log the data received from the backend
-                console.log(comments); */
