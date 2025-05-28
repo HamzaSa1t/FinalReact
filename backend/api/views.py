@@ -381,7 +381,7 @@ class CreateComment(generics.CreateAPIView):
     serializer_class = CommentSerializer
 
     def perform_create(self, serializer):
-        pk = self.kwargs.get("pk")  # or use self.request.parser_context["kwargs"]
+        pk = self.kwargs.get("pk")  
         try:
             product = Product.objects.get(pk=pk)
         except Product.DoesNotExist:  
@@ -407,7 +407,7 @@ class SessionLoginView(APIView):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)  # Establish a session
+            login(request, user)  
             return Response({"detail": "Session login successful"})
         else:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -423,7 +423,6 @@ class SignInView(APIView):
             return Response({"detail": "Please provide both username and password."}, status=status.HTTP_400_BAD_REQUEST)
 
         
-        # Authenticate the user
         user = authenticate(request, username=username, password=password)     #  If the authentication is successful (i.e., the username and password are correct), it returns the User object. If authentication fails (incorrect username or password), it returns None.
         
         if user is not None:
@@ -451,7 +450,7 @@ class AddToChart(UpdateAPIView):
     def perform_update(self, serializer):
         customer = self.get_object()
         product_id = self.request.data.get('Product_id')
-        quantity = self.request.data.get('quantity', 1)  # Default to 1 if quantity is not provided
+        quantity = self.request.data.get('quantity', 1)  
 
         if not product_id:
             raise ValidationError({"Product_id": "This field is required."})
@@ -460,15 +459,14 @@ class AddToChart(UpdateAPIView):
             raise ValidationError({"quantity": "Quantity must be greater than 0."})
 
         try:
-            # Get the product by ID
+            
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
             raise ValidationError({"Product_id": "Product not found."})
 
-        # Check if the product is already in the basket
         relation, created = CustomerRelationToProduct.objects.get_or_create(customer=customer, product=product, is_bought=False)
         
-        if not created:  # If the product is already in the basket, update the quantity
+        if not created:  
             relation.quantity += quantity
             relation.save()
         else:
@@ -477,7 +475,7 @@ class AddToChart(UpdateAPIView):
 
         return Response({"detail": f"Added {quantity} {product.name}(s) to your basket."}, status=status.HTTP_200_OK)
 
-class ClearChart(generics.DestroyAPIView): # !!! الحين لما تسوي كلير للسلة انت لسا ما حذفت اوبجكتات العلاقة + السيريالايزر كلاس؟
+class ClearChart(generics.DestroyAPIView): 
     serializer_class = CustomerRelationToProductSerializer
     permission_classes = [IsCustomer]
     def delete(self, request, *args, **kwargs):
@@ -498,12 +496,13 @@ class DeleteFromChart(generics.DestroyAPIView):
 
     def get_object(self):
         user = self.request.user
-        relation_id = self.kwargs.get('pk')  # This is the CustomerRelationToProduct ID
+        relation_id = self.kwargs.get('pk') 
+        
         logger.info(f"Attempting to delete relation with ID: {relation_id} for user: {user.username}")
         
         try:
             customer = Customer.objects.get(user=user)
-            # Add debug logging
+
             all_relations = CustomerRelationToProduct.objects.filter(customer=customer, is_bought=False)
             logger.info(f"Current basket items for user {user.username}: {[f'Relation ID: {r.id}, Product ID: {r.product.id}' for r in all_relations]}")
             
@@ -520,7 +519,6 @@ class DeleteFromChart(generics.DestroyAPIView):
             raise NotFound("The product is not in your basket.")
     
     def perform_destroy(self, instance):
-        # This will delete the CustomerRelationToProduct instance that links the customer and the product
         instance.delete()
         logger.info(f"Product with ID: {instance.product.id} deleted from the basket for user: {instance.customer.user.username}")
 
@@ -539,7 +537,7 @@ class ShowChart(generics.ListAPIView):
 
 class UpdateChart(generics.UpdateAPIView):
     serializer_class = CustomerRelationToProductSerializer
-    permission_classes = [IsCustomer]  # Ensure user is logged in
+    permission_classes = [IsCustomer]  
 
     def get_queryset(self):
         """Allow users to update only their own cart items"""
@@ -551,7 +549,6 @@ class UpdateChart(generics.UpdateAPIView):
         user = self.request.user
         customer = Customer.objects.get(user=user)
 
-        # Ensure the item belongs to the customer
         cart_item = self.get_object()
         if cart_item.customer != customer:
             return Response({"error": "You are not allowed to modify this item."}, status=status.HTTP_403_FORBIDDEN)
@@ -586,7 +583,7 @@ class DeleteProduct(generics.DestroyAPIView):
     permission_classes = [IsManagerOrSeller]
 
     def perform_destroy(self, instance):
-        # Optional logging or additional actions before deletion
+
         logger.info(f"Deleting product: {instance.name} (ID: {instance.pk})")
         super().perform_destroy(instance)
 
@@ -596,7 +593,7 @@ class UpdateProduct(generics.RetrieveUpdateAPIView):
    
     def perform_update(self, serializer):
         serializer.save()
-        print(f"Product {Product.name} updated successfully")  # Optional logging
+        print(f"Product {Product.name} updated successfully")  
 
 class RateProduct(generics.UpdateAPIView):
     queryset = Product.objects.all()
@@ -611,16 +608,13 @@ class RateProduct(generics.UpdateAPIView):
         if 'new_rating' in request.data:
             new_rating = Decimal(request.data['new_rating'])
         
-        # Ensure that the current rating is set; if not, default it to new_rating.
             current_avg = Decimal(instance.rating if instance.rating is not None else 0)
             current_count = Decimal(instance.number_of_ratings)
         
-        # Calculate the new average rating
             new_average = (current_avg * current_count + new_rating) / (current_count + 1)
             new_average = new_average.quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
             request.data['rating'] = new_average
         
-        # Update the count of ratings
             request.data['number_of_ratings'] = current_count + 1
 
             if serializer.is_valid():
@@ -637,8 +631,7 @@ class RateProduct(generics.UpdateAPIView):
 
 
     def perform_update(self, serializer):
-        serializer.save()  # Now saves the multiplied value
-
+        serializer.save()  
 
 class ListProducts(generics.ListAPIView):
     queryset = Product.objects.all()
@@ -661,14 +654,14 @@ class ShowProductDetails(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
     queryset = Product.objects.all()
-    lookup_field = "pk" # it is not neccecary to add this line: drf automatically look for the object by pk
+    lookup_field = "pk" 
 
 class GetComments(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        pk = self.kwargs.get("pk")  # it is part of the url like: /products/123/
+        pk = self.kwargs.get("pk")  
         
         try:
             our_product = Product.objects.get(pk=pk)
@@ -678,7 +671,6 @@ class GetComments(generics.ListAPIView):
         return Comment.objects.filter(the_product=our_product)
 
 
-# manager
 
 class ListManagers(generics.ListAPIView):
     queryset = Manager.objects.all()
@@ -698,7 +690,6 @@ class ShowHistoryManager(generics.ListAPIView):
         else:
             raise NotFound("You are not a manager or employee.")    
         return  our_products
-#             our_products = EmployeeRelationToProduct.objects.filter(seller = user)
 
 
 """ class ShowHistoryEmployee(generics.ListAPIView):
@@ -814,7 +805,6 @@ class DeleteFireEmployee(generics.DestroyAPIView):
         if instance.user == self.request.user:  
             raise ValidationError({"detail": "You cannot delete your own account."})
 
-        # Delete the related User object
         user = instance.user
         print(f"Deleting User {user.username} related to Employee {instance.id}.")
         user.delete()

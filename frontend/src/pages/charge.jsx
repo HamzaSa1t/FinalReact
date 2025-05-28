@@ -48,6 +48,7 @@ const [charge, setCharge] = useState("");
             const response = await api.post("api/customers/charge/", {increament : amount } );
             if (response.data && (response.status === 200 || response.status === 201)) {
                 ShowBalance(); 
+                e.target.reset(); // Clear the input after successful submit
             } else {
          //       console.log("Failed to charge", response.status);
                 alert("Failed to charge.");

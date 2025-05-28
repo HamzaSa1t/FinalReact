@@ -158,7 +158,7 @@ form input[type="submit"]:hover {
   width: 100%; /* Ensure image takes full width of its container */
   height: auto; /* Maintain aspect ratio */
   max-width: 85%; /* Reduced from 100% to match inline style */
-  max-height: 250px; /* Max height for the image */
+  max-height: 16vw; /* Max height for the image, relative to viewport width */
   border-radius: 10px;
 }
 
