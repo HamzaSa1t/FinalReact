@@ -2,7 +2,7 @@ import axios from "axios";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const api = axios.create({
-    baseURL: process.env.VITE_API_URL || 'https://finalreact-nhpx.onrender.com',
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 api.interceptors.request.use(

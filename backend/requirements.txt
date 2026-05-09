@@ -17,3 +17,4 @@ virtualenv==20.26.3
 gunicorn
 psycopg2-binary
 dj-database-url
+whitenoise

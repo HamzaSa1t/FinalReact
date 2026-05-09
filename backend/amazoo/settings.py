@@ -42,17 +42,17 @@ STATIC_URL = '/static/'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%=3xm$lrhgufaw*e2zv6w(z2j^h1r89wg5l3jky5)h(@je1chq'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-%=3xm$lrhgufaw*e2zv6w(z2j^h1r89wg5l3jky5)h(@je1chq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = [
-"final-react-xi.vercel.app",
-    "finalreact-nhpx.onrender.com",
-    "final-react-git-main-hamzas-projects-8f309efb.vercel.app",
-    "final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app"
-]
+_default_hosts = "final-react-xi.vercel.app,localhost,127.0.0.1,.up.railway.app,.railway.app"
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", _default_hosts).split(",") if h.strip()]
+
+RAILWAY_PUBLIC_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
+if RAILWAY_PUBLIC_DOMAIN and RAILWAY_PUBLIC_DOMAIN not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -88,6 +88,7 @@ added api, rest_framework, corsheaders.
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,8 +129,9 @@ WSGI_APPLICATION = 'amazoo.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'), # This will now read from your .env file
-        conn_max_age=600
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        conn_max_age=600,
+        ssl_require=os.environ.get('DATABASE_URL', '').startswith('postgres'),
     )
 }
 
@@ -169,6 +171,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -176,24 +182,24 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOWS_CREDENTIALS = True
-"""
-WE ADDED THOSE FUNCTIONS AND MADE THEM = TRUE.
-"""
-CORS_ALLOWED_ORIGINS = [  
-  'https://final-react-xi.vercel.app',
-  'https://finalreact-nhpx.onrender.com',
-  'https://final-react-git-main-hamzas-projects-8f309efb.vercel.app',
-  'https://final-react-pgjetvst6-hamzas-projects-8f309efb.vercel.app',
-  "http://localhost:5173",
-  "http://localhost:5175",
+CORS_ALLOW_CREDENTIALS = True
+
+_default_cors = "https://final-react-xi.vercel.app,http://localhost:5173,http://localhost:5175"
+CORS_ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("CORS_ALLOWED_ORIGINS", _default_cors).split(",") if o.strip()]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://final-react-.*\.vercel\.app$",
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'amazoowebsite@gmail.com'
-EMAIL_HOST_PASSWORD = 'wrhh zbnl vqek xnqn'  
+CSRF_TRUSTED_ORIGINS = [o for o in CORS_ALLOWED_ORIGINS if o.startswith("http")]
+if RAILWAY_PUBLIC_DOMAIN:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_PUBLIC_DOMAIN}")
 
-print("Using database:", DATABASES['default']['ENGINE'])  # Check server logs
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'amazoowebsite@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+
+# Trust X-Forwarded-Proto header (Railway / Render / any proxy that terminates TLS)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
